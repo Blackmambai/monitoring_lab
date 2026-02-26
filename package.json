@@ -1,0 +1,18 @@
+{
+  "name": "tiktok-live-war",
+  "version": "1.0.0",
+  "description": "Game TikTok Live 3D - Merah vs Biru",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "socket.io": "^4.7.2",
+    "tiktok-live-connector": "^1.1.4"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
