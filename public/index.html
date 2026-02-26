@@ -8,119 +8,184 @@
     <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
     <!-- Socket.io & SheetJS -->
     <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 
 <body class="text-light d-flex vh-100">
-    <div class="d-none justify-content-center align-items-center" id="security-alert" style="width: 100%;height: 100vh;background: #000000;">
-        <div class="alert alert-danger text-center bg-opacity-10 border-danger mt-4" role="alert" style="max-width: 28rem;border-radius: 16px;"><i class="fas fa-exclamation-triangle me-2" style="font-size: 53px;margin-bottom: 16px;"></i>
+    <div class="d-none justify-content-center align-items-center" id="security-alert"
+        style="width: 100%;height: 100vh;background: #000000;">
+        <div class="alert alert-danger text-center bg-opacity-10 border-danger mt-4" role="alert"
+            style="max-width: 28rem;border-radius: 16px;"><i class="fas fa-exclamation-triangle me-2"
+                style="font-size: 53px;margin-bottom: 16px;"></i>
             <h4 class="alert-heading fw-bold mb-2"> Belajar lagi dek..</h4>
             <p style="margin-bottom: 0px;">Cie gabisa liat wkwkwk..</p>
-        </div><script>
-        // ==========================================
-        // 1. MENCEGAH KLIK KANAN (CONTEXT MENU)
-        // ==========================================
-        document.addEventListener('contextmenu', function(e) {
-            e.preventDefault();
-            // Alert dihapus agar lebih bersih, hanya mencegah menu muncul
-        });
+        </div>
+        <script>
+            // ==========================================
+            // 1. MENCEGAH KLIK KANAN (CONTEXT MENU)
+            // ==========================================
+            document.addEventListener('contextmenu', function (e) {
+                e.preventDefault();
+                // Alert dihapus agar lebih bersih, hanya mencegah menu muncul
+            });
 
-        // ==========================================
-        // 2. MENCEGAH SHORTCUT KEYBOARD
-        // ==========================================
-        document.onkeydown = function(e) {
-            if(e.keyCode == 123) return false; // F12
-            if(e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
-            if(e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
-        }
+            // ==========================================
+            // 2. MENCEGAH SHORTCUT KEYBOARD
+            // ==========================================
+            document.onkeydown = function (e) {
+                if (e.keyCode == 123) return false; // F12
+                if (e.ctrlKey && e.shiftKey && (e.keyCode == 73 || e.keyCode == 74 || e.keyCode == 67)) return false; // Ctrl+Shift+I/J/C
+                if (e.ctrlKey && e.keyCode == 85) return false; // Ctrl+U
+            }
 
-        // ==========================================
-        // 3. DETEKSI & PENGHAPUSAN DATA (Jika dipaksa)
-        // ==========================================
-        function nukeData() {
-            const sensitiveElements = document.querySelectorAll('.deletedata');
-            const alertBox = document.getElementById('security-alert');
-            
-            if(sensitiveElements.length > 0) {
-                // Hapus elemen
-                sensitiveElements.forEach(el => el.remove());
-                
-                // Tampilkan Overlay Full Screen
-                if(alertBox) {
-                    alertBox.classList.remove('d-none');
-                    // Tambahkan class d-flex agar centering berfungsi (karena d-none menimpa d-flex sebelumnya)
-                    alertBox.classList.add('d-flex'); 
+            // ==========================================
+            // 3. DETEKSI & PENGHAPUSAN DATA (Jika dipaksa)
+            // ==========================================
+            function nukeData() {
+                const sensitiveElements = document.querySelectorAll('.deletedata');
+                const alertBox = document.getElementById('security-alert');
+
+                if (sensitiveElements.length > 0) {
+                    // Hapus elemen
+                    sensitiveElements.forEach(el => el.remove());
+
+                    // Tampilkan Overlay Full Screen
+                    if (alertBox) {
+                        alertBox.classList.remove('d-none');
+                        // Tambahkan class d-flex agar centering berfungsi (karena d-none menimpa d-flex sebelumnya)
+                        alertBox.classList.add('d-flex');
+                    }
+
+                    console.clear();
+                    console.log("%cSystem Halted.", "color: red; font-size: 20px; font-weight: bold;");
                 }
-                
-                console.clear();
-                console.log("%cSystem Halted.", "color: red; font-size: 20px; font-weight: bold;");
             }
-        }
 
-        function detectDevTools() {
-            const widthThreshold = window.outerWidth - window.innerWidth > 160;
-            const heightThreshold = window.outerHeight - window.innerHeight > 160;
-            
-            if(widthThreshold || heightThreshold) {
-               nukeData();
+            function detectDevTools() {
+                const widthThreshold = window.outerWidth - window.innerWidth > 160;
+                const heightThreshold = window.outerHeight - window.innerHeight > 160;
+
+                if (widthThreshold || heightThreshold) {
+                    nukeData();
+                }
             }
-        }
 
-        setInterval(detectDevTools, 500);
-        window.addEventListener('resize', detectDevTools);
+            setInterval(detectDevTools, 500);
+            window.addEventListener('resize', detectDevTools);
 
-    </script>
+        </script>
     </div>
-    <div class="offcanvas-md offcanvas-start d-flex flex-column glass-panel border-end border-panel deletedata" tabindex="-1" data-bs-backdrop="false" id="sidebarMenu" style="width: 345px;border-radius: 0 16px 16px 0;z-index: 1040;">
+    <div class="offcanvas-md offcanvas-start d-flex flex-column glass-panel border-end border-panel deletedata"
+        tabindex="-1" data-bs-backdrop="false" id="sidebarMenu"
+        style="width: 345px;border-radius: 0 16px 16px 0;z-index: 1040;">
         <div class="offcanvas-header bg-transparent flex-column align-items-start pb-3 border-bottom border-panel">
             <div class="d-flex w-100 justify-content-between align-items-center mb-2">
-                <div class="d-flex align-items-center gap-2"><img class="shadow-sm" src="https://bylinkpro.com/assets/img/imagebylinkpro/asset/icon1.webp" alt="Logo App" style="width: 53%;height: auto;object-fit: cover;padding: 9px;background: var(--bs-light);border-radius: 16px;"></div><button class="btn btn-outline-secondary d-md-none border-panel text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button>
+                <div class="d-flex align-items-center gap-2"><img class="shadow-sm"
+                        src="https://bylinkpro.com/assets/img/imagebylinkpro/asset/icon1.webp" alt="Logo App"
+                        style="width: 53%;height: auto;object-fit: cover;padding: 9px;background: var(--bs-light);border-radius: 16px;">
+                </div><button class="btn btn-outline-secondary d-md-none border-panel text-white" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button>
             </div>
-            <div class="d-flex w-100 justify-content-between align-items-center mt-1 px-1"><span class="badge text-info bg-info bg-opacity-25 border rounded-pill border-info" style="font-size:0.65rem;">Dev. Bimboy.zxz</span><span class="badge text-info bg-info bg-opacity-25 border rounded-pill border-info" style="font-size:0.65rem;">v19.0.1</span></div>
+            <div class="d-flex w-100 justify-content-between align-items-center mt-1 px-1"><span
+                    class="badge text-info bg-info bg-opacity-25 border rounded-pill border-info"
+                    style="font-size:0.65rem;">Dev. Bimboy.zxz</span><span
+                    class="badge text-info bg-info bg-opacity-25 border rounded-pill border-info"
+                    style="font-size:0.65rem;">v19.0.1</span></div>
         </div>
         <div class="offcanvas-body bg-transparent d-flex overflow-y-auto flex-column flex-grow-1 p-3">
             <ul class="nav flex-column mt-2 mb-auto">
-                <li class="nav-item"><a class="nav-link active py-3 text-white nav-item-custom" href="#"><i class="fas fa-home me-2 fa-fw"></i> Dashboard </a><a class="nav-link py-3 text-white nav-item-custom" data-bs-target="#developerModal" data-bs-toggle="modal"><i class="fas fa-mask me-2 fa-fw"></i> Informasi Dev</a></li>
-                <li class="nav-item"><a class="nav-link d-flex justify-content-between align-items-center py-3 text-white nav-item-custom" aria-expanded="false" data-bs-toggle="collapse" href="#exportSubMenu" role="button"><span><i class="fas fa-download me-2 fa-fw"></i> Export Laporan</span><i class="fas fa-chevron-down" style="font-size:0.75rem;"></i></a>
+                <li class="nav-item"><a class="nav-link active py-3 text-white nav-item-custom" href="#"><i
+                            class="fas fa-home me-2 fa-fw"></i> Dashboard </a><a
+                        class="nav-link py-3 text-white nav-item-custom" data-bs-target="#developerModal"
+                        data-bs-toggle="modal"><i class="fas fa-mask me-2 fa-fw"></i> Informasi Dev</a></li>
+                <li class="nav-item"><a
+                        class="nav-link d-flex justify-content-between align-items-center py-3 text-white nav-item-custom"
+                        aria-expanded="false" data-bs-toggle="collapse" href="#exportSubMenu" role="button"><span><i
+                                class="fas fa-download me-2 fa-fw"></i> Export Laporan</span><i
+                            class="fas fa-chevron-down" style="font-size:0.75rem;"></i></a>
                     <div id="exportSubMenu" class="collapse">
-                        <ul class="nav flex-column ms-3 mb-2" role="tablist" style="border-left:2px solid rgba(255,255,255,0.1);">
-                            <li class="nav-item" role="presentation"><a class="nav-link active py-2 text-muted-custom hover-dev" role="tab" data-bs-toggle="" href="#" onclick="exportGlobalExcel(&#39;Harian&#39;)"><i class="fas fa-circle me-2" style="font-size:0.4rem;"></i>Laporan Harian</a></li>
-                            <li class="nav-item" role="presentation"><a class="nav-link py-2 text-muted-custom hover-dev" role="tab" data-bs-toggle="" href="#" onclick="exportGlobalExcel(&#39;Mingguan&#39;)"><i class="fas fa-circle me-2" style="font-size:0.4rem;"></i>Laporan Mingguan</a></li>
-                            <li class="nav-item" role="presentation"><a class="nav-link py-2 text-muted-custom hover-dev" role="tab" data-bs-toggle="" href="#" onclick="exportGlobalExcel(&#39;Semua Data&#39;)"><i class="fas fa-circle me-2" style="font-size:0.4rem;"></i>Semua Data</a></li>
+                        <ul class="nav flex-column ms-3 mb-2" role="tablist"
+                            style="border-left:2px solid rgba(255,255,255,0.1);">
+                            <li class="nav-item" role="presentation"><a
+                                    class="nav-link active py-2 text-muted-custom hover-dev" role="tab"
+                                    data-bs-toggle="" href="#" onclick="exportGlobalExcel(&#39;Harian&#39;)"><i
+                                        class="fas fa-circle me-2" style="font-size:0.4rem;"></i>Laporan Harian</a></li>
+                            <li class="nav-item" role="presentation"><a
+                                    class="nav-link py-2 text-muted-custom hover-dev" role="tab" data-bs-toggle=""
+                                    href="#" onclick="exportGlobalExcel(&#39;Mingguan&#39;)"><i
+                                        class="fas fa-circle me-2" style="font-size:0.4rem;"></i>Laporan Mingguan</a>
+                            </li>
+                            <li class="nav-item" role="presentation"><a
+                                    class="nav-link py-2 text-muted-custom hover-dev" role="tab" data-bs-toggle=""
+                                    href="#" onclick="exportGlobalExcel(&#39;Semua Data&#39;)"><i
+                                        class="fas fa-circle me-2" style="font-size:0.4rem;"></i>Semua Data</a></li>
                         </ul>
                     </div>
                 </li>
-                <li class="nav-item"><a class="nav-link py-3 text-white nav-item-custom" href="#"><i class="fas fa-file-excel me-2 fa-fw"></i> Import Akun </a></li>
-                <li class="nav-item mt-3"><a class="nav-link py-2 text-warning nav-item-custom" href="#" style="background:rgba(245, 158, 11, 0.15);border:1px solid rgba(245, 158, 11, 0.3);" onclick="clearAllActivities()"><i class="fas fa-broom me-2 fa-fw"></i> Bersihkan Log Global </a></li>
-                <li class="nav-item mt-2"><a class="nav-link py-2 text-danger nav-item-custom" href="#" style="background:rgba(220,53,69,0.15);border:1px solid rgba(220,53,69,0.3);" onclick="removeAllStreams()"><i class="fas fa-user-times me-2 fa-fw"></i> Hapus Semua Akun </a></li>
+                <li class="nav-item"><a class="nav-link py-3 text-white nav-item-custom" href="#"><i
+                            class="fas fa-file-excel me-2 fa-fw"></i> Import Akun </a></li>
+                <li class="nav-item mt-3"><a class="nav-link py-2 text-warning nav-item-custom" href="#"
+                        style="background:rgba(245, 158, 11, 0.15);border:1px solid rgba(245, 158, 11, 0.3);"
+                        onclick="clearAllActivities()"><i class="fas fa-broom me-2 fa-fw"></i> Bersihkan Log Global </a>
+                </li>
+                <li class="nav-item mt-2"><a class="nav-link py-2 text-danger nav-item-custom" href="#"
+                        style="background:rgba(220,53,69,0.15);border:1px solid rgba(220,53,69,0.3);"
+                        onclick="removeAllStreams()"><i class="fas fa-user-times me-2 fa-fw"></i> Hapus Semua Akun </a>
+                </li>
             </ul>
-            <div class="text-center border p-3 mt-4 glass-panel-darker border-panel"><i class="fas fa-server fs-3 text-success mb-2 pulse animated infinite" style="filter:drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));"></i>
+            <div class="text-center border p-3 mt-4 glass-panel-darker border-panel"><i
+                    class="fas fa-server fs-3 text-success mb-2 pulse animated infinite"
+                    style="filter:drop-shadow(0 0 8px rgba(16, 185, 129, 0.5));"></i>
                 <div class="small text-muted-custom"><span>Status Server</span></div>
                 <div class="small fw-bold text-success mt-1"><span>Server Sibuk</span></div>
                 <div class="border-secondary mt-3 pt-3 border-top" style="border-color:rgba(255,255,255,0.1);">
                     <div class="small mb-1 text-muted-custom" style="font-size:0.7rem;"><span>RAM Terpakai</span></div>
-                    <div class="small fw-bold text-info" id="server-memory-usage"><i class="fas fa-spinner me-1 fa-spin"></i><span>Menunggu...</span></div>
+                    <div class="small fw-bold text-info" id="server-memory-usage"><i
+                            class="fas fa-spinner me-1 fa-spin"></i><span>Menunggu...</span></div>
                 </div>
             </div>
             <div class="text-center mt-3"></div>
         </div>
     </div>
     <div class="d-flex w-100 overflow-hidden flex-column flex-grow-1 deletedata">
-        <header class="d-flex justify-content-between align-items-center p-3 glass-panel border-bottom border-panel shrink-0" style="border-radius:0 0 16px 16px;margin:0 10px;position:relative;z-index:1030;">
-            <div class="d-flex flex-grow-1 align-items-center gap-3"><button class="btn btn-outline-secondary d-md-none border-panel text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button>
-                <div class="input-group shadow-sm" style="max-width:350px;"><span class="input-group-text"><i class="fas fa-search text-muted-custom"></i></span><input class="form-control" type="text" id="searchInput" placeholder="Pencarian cepat akun..." onkeyup="filterStreams()"></div>
+        <header
+            class="d-flex justify-content-between align-items-center p-3 glass-panel border-bottom border-panel shrink-0"
+            style="border-radius:0 0 16px 16px;margin:0 10px;position:relative;z-index:1030;">
+            <div class="d-flex flex-grow-1 align-items-center gap-3"><button
+                    class="btn btn-outline-secondary d-md-none border-panel text-white" type="button"
+                    data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu"><i class="fas fa-bars"></i></button>
+                <div class="input-group shadow-sm" style="max-width:350px;"><span class="input-group-text"><i
+                            class="fas fa-search text-muted-custom"></i></span><input class="form-control" type="text"
+                        id="searchInput" placeholder="Pencarian cepat akun..." onkeyup="filterStreams()"></div>
             </div>
-            <div class="d-flex gap-2 ms-2" style="height: 38px;"><button class="btn d-flex align-items-center gap-2 btn-gradient-primary" data-bs-toggle="modal" data-bs-target="#addAccountModal"><i class="fas fa-user-plus"></i><span class="fw-bold d-none d-sm-inline">Tambah Akun</span></button><input class="d-none" type="file" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" id="fileInput"><button class="btn d-flex align-items-center gap-2 btn-gradient-info" title="Import Excel" onclick="requirePin(() =&gt; document.getElementById(&#39;fileInput&#39;).click())"><i class="fas fa-file-import"></i><span class="fw-bold d-none d-lg-inline">Import</span></button>
-                <div class="dropdown"><button class="btn d-flex align-items-center gap-2 btn-gradient-success dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Export Excel" style="height: 38px;"><i class="fas fa-file-excel"></i><span class="fw-bold d-none d-lg-inline">Export</span></button>
+            <div class="d-flex gap-2 ms-2" style="height: 38px;"><button
+                    class="btn d-flex align-items-center gap-2 btn-gradient-primary" data-bs-toggle="modal"
+                    data-bs-target="#addAccountModal"><i class="fas fa-user-plus"></i><span
+                        class="fw-bold d-none d-sm-inline">Tambah Akun</span></button><input class="d-none" type="file"
+                    accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+                    id="fileInput"><button class="btn d-flex align-items-center gap-2 btn-gradient-info"
+                    title="Import Excel"
+                    onclick="requirePin(() =&gt; document.getElementById(&#39;fileInput&#39;).click())"><i
+                        class="fas fa-file-import"></i><span class="fw-bold d-none d-lg-inline">Import</span></button>
+                <div class="dropdown"><button
+                        class="btn d-flex align-items-center gap-2 btn-gradient-success dropdown-toggle" type="button"
+                        data-bs-toggle="dropdown" aria-expanded="false" title="Export Excel" style="height: 38px;"><i
+                            class="fas fa-file-excel"></i><span
+                            class="fw-bold d-none d-lg-inline">Export</span></button>
                     <ul class="shadow-lg mt-2 dropdown-menu dropdown-menu-end dropdown-menu-glass">
-                        <li><a class="dropdown-item" href="#" onclick="exportGlobalExcel(&#39;Harian&#39;)"><i class="fas fa-calendar-day text-info me-2"></i>Laporan Harian</a></li>
-                        <li><a class="dropdown-item" href="#" onclick="exportGlobalExcel(&#39;Mingguan&#39;)"><i class="fas fa-calendar-week text-warning me-2"></i>Laporan Mingguan</a></li>
-                        <li><hr class="dropdown-divider border-panel"></li>
-                        <li><a class="dropdown-item" href="#" onclick="exportGlobalExcel(&#39;Semua Data&#39;)"><i class="fas fa-globe text-success me-2"></i>Laporan Global</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="exportGlobalExcel(&#39;Harian&#39;)"><i
+                                    class="fas fa-calendar-day text-info me-2"></i>Laporan Harian</a></li>
+                        <li><a class="dropdown-item" href="#" onclick="exportGlobalExcel(&#39;Mingguan&#39;)"><i
+                                    class="fas fa-calendar-week text-warning me-2"></i>Laporan Mingguan</a></li>
+                        <li>
+                            <hr class="dropdown-divider border-panel">
+                        </li>
+                        <li><a class="dropdown-item" href="#" onclick="exportGlobalExcel(&#39;Semua Data&#39;)"><i
+                                    class="fas fa-globe text-success me-2"></i>Laporan Global</a></li>
                     </ul>
                 </div>
             </div>
@@ -129,331 +194,356 @@
             <div class="row mb-4 g-3">
                 <div class="col-6 col-xl-3">
                     <div class="border d-flex h-100 align-items-center gap-3 p-3 p-xl-4 glass-panel border-panel">
-                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center" style="width:50px;height:50px;background:rgba(14, 165, 233, 0.15);border:1px solid rgba(14, 165, 233, 0.3);"><i class="fas fa-users fs-4 icon-grad-users"></i></div>
+                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center"
+                            style="width:50px;height:50px;background:rgba(14, 165, 233, 0.15);border:1px solid rgba(14, 165, 233, 0.3);">
+                            <i class="fas fa-users fs-4 icon-grad-users"></i></div>
                         <div class="overflow-hidden">
-                            <div class="text-truncate text-uppercase fw-bold text-muted-custom" style="font-size:0.65rem;letter-spacing:1px;"><span>Total Akun</span></div>
+                            <div class="text-truncate text-uppercase fw-bold text-muted-custom"
+                                style="font-size:0.65rem;letter-spacing:1px;"><span>Total Akun</span></div>
                             <div class="text-truncate fs-3 fw-bold text-white" id="global-accounts"><span>0</span></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-xl-3">
                     <div class="border d-flex h-100 align-items-center gap-3 p-3 p-xl-4 glass-panel border-panel">
-                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center" style="width:50px;height:50px;background:rgba(16, 185, 129, 0.15);border:1px solid rgba(16, 185, 129, 0.3);"><i class="fas fa-eye fs-4 icon-grad-viewers"></i></div>
+                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center"
+                            style="width:50px;height:50px;background:rgba(16, 185, 129, 0.15);border:1px solid rgba(16, 185, 129, 0.3);">
+                            <i class="fas fa-eye fs-4 icon-grad-viewers"></i></div>
                         <div class="overflow-hidden">
-                            <div class="text-truncate text-uppercase fw-bold text-muted-custom" style="font-size:0.65rem;letter-spacing:1px;"><span>Penonton (Peak)</span></div>
-                            <div class="text-truncate fs-3 fw-bold text-white" id="global-viewers-peak"><span>0</span></div>
+                            <div class="text-truncate text-uppercase fw-bold text-muted-custom"
+                                style="font-size:0.65rem;letter-spacing:1px;"><span>Penonton (Peak)</span></div>
+                            <div class="text-truncate fs-3 fw-bold text-white" id="global-viewers-peak"><span>0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-xl-3">
                     <div class="border d-flex h-100 align-items-center gap-3 p-3 p-xl-4 glass-panel border-panel">
-                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center" style="width:50px;height:50px;background:rgba(244, 63, 94, 0.15);border:1px solid rgba(244, 63, 94, 0.3);"><i class="fas fa-heart fs-4 icon-grad-likes"></i></div>
+                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center"
+                            style="width:50px;height:50px;background:rgba(244, 63, 94, 0.15);border:1px solid rgba(244, 63, 94, 0.3);">
+                            <i class="fas fa-heart fs-4 icon-grad-likes"></i></div>
                         <div class="overflow-hidden">
-                            <div class="text-truncate text-uppercase fw-bold text-muted-custom" style="font-size:0.65rem;letter-spacing:1px;"><span>Total Likes</span></div>
+                            <div class="text-truncate text-uppercase fw-bold text-muted-custom"
+                                style="font-size:0.65rem;letter-spacing:1px;"><span>Total Likes</span></div>
                             <div class="text-truncate fs-3 fw-bold text-white" id="global-likes"><span>0</span></div>
                         </div>
                     </div>
                 </div>
                 <div class="col-6 col-xl-3">
                     <div class="border d-flex h-100 align-items-center gap-3 p-3 p-xl-4 glass-panel border-panel">
-                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center" style="width:50px;height:50px;background:rgba(245, 158, 11, 0.15);border:1px solid rgba(245, 158, 11, 0.3);"><i class="fas fa-bolt fs-4 icon-grad-interact"></i></div>
+                        <div class="rounded-circle d-flex flex-shrink-0 justify-content-center align-items-center"
+                            style="width:50px;height:50px;background:rgba(245, 158, 11, 0.15);border:1px solid rgba(245, 158, 11, 0.3);">
+                            <i class="fas fa-bolt fs-4 icon-grad-interact"></i></div>
                         <div class="overflow-hidden">
-                            <div class="text-truncate text-uppercase fw-bold text-muted-custom" style="font-size:0.65rem;letter-spacing:1px;"><span>Interaksi Total</span></div>
-                            <div class="text-truncate fs-3 fw-bold text-white" id="global-interactions"><span>0</span></div>
+                            <div class="text-truncate text-uppercase fw-bold text-muted-custom"
+                                style="font-size:0.65rem;letter-spacing:1px;"><span>Interaksi Total</span></div>
+                            <div class="text-truncate fs-3 fw-bold text-white" id="global-interactions"><span>0</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="border d-flex justify-content-between align-items-center flex-wrap gap-3 p-3 mb-4 glass-panel border-panel">
-                <div class="d-flex align-items-center gap-2"><i class="fas fa-filter text-info"></i><span class="small fw-bold text-white">Filter Data:</span></div>
-                <div class="d-flex flex-grow-1 justify-content-end flex-wrap gap-3"><select class="shadow-sm form-select" id="categoryFilter" onchange="filterStreams()">
+            <div
+                class="border d-flex justify-content-between align-items-center flex-wrap gap-3 p-3 mb-4 glass-panel border-panel">
+                <div class="d-flex align-items-center gap-2"><i class="fas fa-filter text-info"></i><span
+                        class="small fw-bold text-white">Filter Data:</span></div>
+                <div class="d-flex flex-grow-1 justify-content-end flex-wrap gap-3"><select
+                        class="shadow-sm form-select" id="categoryFilter" onchange="filterStreams()">
                         <option value="">Semua Kategori</option>
                     </select>
-                    <div class="btn-group border shadow-sm p-1 border-panel glass-panel-darker border-panel-p1" role="group" style="width: 100%;border-radius: 16px;"><button class="btn btn-sm active fw-bold text-light status-tab" id="tab-status-all" onclick="setStatusFilter(&#39;all&#39;)">Semua</button><button class="btn btn-sm fw-bold text-light status-tab" id="tab-status-live" onclick="setStatusFilter(&#39;live&#39;)">Online</button><button class="btn btn-sm fw-bold text-light status-tab" id="tab-status-offline" onclick="setStatusFilter(&#39;offline&#39;)">Offline</button></div>
+                    <div class="btn-group border shadow-sm p-1 border-panel glass-panel-darker border-panel-p1"
+                        role="group" style="width: 100%;border-radius: 16px;"><button
+                            class="btn btn-sm active fw-bold text-light status-tab" id="tab-status-all"
+                            onclick="setStatusFilter(&#39;all&#39;)">Semua</button><button
+                            class="btn btn-sm fw-bold text-light status-tab" id="tab-status-live"
+                            onclick="setStatusFilter(&#39;live&#39;)">Online</button><button
+                            class="btn btn-sm fw-bold text-light status-tab" id="tab-status-offline"
+                            onclick="setStatusFilter(&#39;offline&#39;)">Offline</button></div>
                 </div>
             </div>
             <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 row-cols-xxl-4 pb-5 g-4" id="streamsGrid"></div>
-        </main><script>
-        const Toast = Swal.mixin({
-            toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true,
-            background: 'rgba(30, 41, 59, 0.95)', color: '#fff',
-            customClass: { popup: 'border border-secondary rounded-4 shadow-lg' }
-        });
-        const Swalert = Swal.mixin({ 
-            background: 'rgba(30, 41, 59, 0.95)', color: '#fff', 
-            confirmButtonColor: '#0ea5e9', cancelButtonColor: '#475569',
-            customClass: { popup: 'border border-secondary rounded-4 shadow-lg' }
-        });
-
-        const socket = io();
-        const streams = {};
-        let currentStatusFilter = 'all'; 
-
-        // === FUNGSI KEAMANAN PIN ===
-        const ACCESS_PIN = "_123bimagantengbanget";
-        let pendingPinCallback = null;
-
-        function requirePin(callback) {
-            pendingPinCallback = callback;
-            const pinInput = document.getElementById('pinInput');
-            pinInput.value = '';
-            document.getElementById('pinError').classList.add('d-none');
-            
-            const pinModalEl = document.getElementById('pinModal');
-            const pinModal = bootstrap.Modal.getInstance(pinModalEl) || new bootstrap.Modal(pinModalEl);
-            pinModal.show();
-
-            pinModalEl.addEventListener('shown.bs.modal', () => { pinInput.focus(); }, { once: true });
-        }
-
-        function submitPin() {
-            const pinValue = document.getElementById('pinInput').value;
-            if (pinValue === ACCESS_PIN) {
-                document.getElementById('pinError').classList.add('d-none');
-                const pinModalEl = document.getElementById('pinModal');
-                const modalInstance = bootstrap.Modal.getInstance(pinModalEl);
-                if (modalInstance) modalInstance.hide();
-                if (pendingPinCallback) { pendingPinCallback(); pendingPinCallback = null; }
-            } else {
-                document.getElementById('pinError').classList.remove('d-none');
-                document.getElementById('pinInput').focus();
-            }
-        }
-
-        // === FUNGSI UTILITAS ===
-        function setStatusFilter(status) {
-            currentStatusFilter = status;
-            document.getElementById('tab-status-all').classList.remove('active');
-            document.getElementById('tab-status-live').classList.remove('active');
-            document.getElementById('tab-status-offline').classList.remove('active');
-            document.getElementById(`tab-status-${status}`).classList.add('active');
-            filterStreams();
-        }
-
-        function updateCategoryDropdown() {
-            const select = document.getElementById('categoryFilter');
-            const currentSelected = select.value;
-            const categories = new Set();
-            for (let user in streams) { if (streams[user].label1) categories.add(streams[user].label1); }
-            select.innerHTML = '<option value="" style="background: #1e293b;">Semua Kategori</option>';
-            Array.from(categories).sort().forEach(cat => {
-                const option = document.createElement('option');
-                option.value = cat; option.textContent = cat; option.style.background = '#1e293b';
-                select.appendChild(option);
+        </main>
+        <script>
+            const Toast = Swal.mixin({
+                toast: true, position: 'top-end', showConfirmButton: false, timer: 3000, timerProgressBar: true,
+                background: 'rgba(30, 41, 59, 0.95)', color: '#fff',
+                customClass: { popup: 'border border-secondary rounded-4 shadow-lg' }
             });
-            if (categories.has(currentSelected)) { select.value = currentSelected; }
-        }
+            const Swalert = Swal.mixin({
+                background: 'rgba(30, 41, 59, 0.95)', color: '#fff',
+                confirmButtonColor: '#0ea5e9', cancelButtonColor: '#475569',
+                customClass: { popup: 'border border-secondary rounded-4 shadow-lg' }
+            });
 
-        function filterStreams() {
-            const query = document.getElementById('searchInput').value.toLowerCase();
-            const selectedCategory = document.getElementById('categoryFilter').value;
-            for (let username in streams) {
-                const colWrapper = document.getElementById(`col-${username}`);
-                if (colWrapper) {
-                    const stream = streams[username];
-                    const matchName = username.includes(query);
-                    const matchCategory = selectedCategory === "" || stream.label1 === selectedCategory;
-                    let matchStatus = true;
-                    if (currentStatusFilter === 'live') matchStatus = stream.status === 'live';
-                    else if (currentStatusFilter === 'offline') matchStatus = stream.status === 'offline' || stream.status === 'checking';
+            const socket = io();
+            const streams = {};
+            let currentStatusFilter = 'all';
 
-                    if (matchName && matchCategory && matchStatus) colWrapper.style.display = 'block';
-                    else colWrapper.style.display = 'none';
+            // === FUNGSI KEAMANAN PIN ===
+            const ACCESS_PIN = "_123bimagantengbanget";
+            let pendingPinCallback = null;
+
+            function requirePin(callback) {
+                pendingPinCallback = callback;
+                const pinInput = document.getElementById('pinInput');
+                pinInput.value = '';
+                document.getElementById('pinError').classList.add('d-none');
+
+                const pinModalEl = document.getElementById('pinModal');
+                const pinModal = bootstrap.Modal.getInstance(pinModalEl) || new bootstrap.Modal(pinModalEl);
+                pinModal.show();
+
+                pinModalEl.addEventListener('shown.bs.modal', () => { pinInput.focus(); }, { once: true });
+            }
+
+            function submitPin() {
+                const pinValue = document.getElementById('pinInput').value;
+                if (pinValue === ACCESS_PIN) {
+                    document.getElementById('pinError').classList.add('d-none');
+                    const pinModalEl = document.getElementById('pinModal');
+                    const modalInstance = bootstrap.Modal.getInstance(pinModalEl);
+                    if (modalInstance) modalInstance.hide();
+                    if (pendingPinCallback) { pendingPinCallback(); pendingPinCallback = null; }
+                } else {
+                    document.getElementById('pinError').classList.remove('d-none');
+                    document.getElementById('pinInput').focus();
                 }
             }
-        }
 
-        function switchTab(username, tab) {
-            const btnChat = document.getElementById(`tab-btn-chat-${username}`);
-            const btnGift = document.getElementById(`tab-btn-gift-${username}`);
-            const contentChat = document.getElementById(`tab-chat-${username}`);
-            const contentGift = document.getElementById(`tab-gift-${username}`);
-
-            const activeClass = 'btn btn-link text-decoration-none flex-fill fw-bold border-bottom border-2 shadow-none';
-            const inactiveClass = 'btn btn-link text-decoration-none flex-fill fw-bold border-bottom border-2 border-transparent text-muted-custom shadow-none';
-
-            if (tab === 'chat') {
-                btnChat.className = `${activeClass} border-info text-info glass-panel-darker`;
-                btnGift.className = inactiveClass;
-                contentChat.classList.remove('d-none'); contentGift.classList.add('d-none');
-            } else {
-                btnGift.className = `${activeClass} border-warning text-warning glass-panel-darker`;
-                btnChat.className = inactiveClass;
-                contentChat.classList.add('d-none'); contentGift.classList.remove('d-none');
+            // === FUNGSI UTILITAS ===
+            function setStatusFilter(status) {
+                currentStatusFilter = status;
+                document.getElementById('tab-status-all').classList.remove('active');
+                document.getElementById('tab-status-live').classList.remove('active');
+                document.getElementById('tab-status-offline').classList.remove('active');
+                document.getElementById(`tab-status-${status}`).classList.add('active');
+                filterStreams();
             }
-        }
 
-        function formatNumber(num) {
-            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-            return num;
-        }
+            function updateCategoryDropdown() {
+                const select = document.getElementById('categoryFilter');
+                const currentSelected = select.value;
+                const categories = new Set();
+                for (let user in streams) { if (streams[user].label1) categories.add(streams[user].label1); }
+                select.innerHTML = '<option value="" style="background: #1e293b;">Semua Kategori</option>';
+                Array.from(categories).sort().forEach(cat => {
+                    const option = document.createElement('option');
+                    option.value = cat; option.textContent = cat; option.style.background = '#1e293b';
+                    select.appendChild(option);
+                });
+                if (categories.has(currentSelected)) { select.value = currentSelected; }
+            }
 
-        function getTodayDate() { return new Date().toISOString().split('T')[0]; }
+            function filterStreams() {
+                const query = document.getElementById('searchInput').value.toLowerCase();
+                const selectedCategory = document.getElementById('categoryFilter').value;
+                for (let username in streams) {
+                    const colWrapper = document.getElementById(`col-${username}`);
+                    if (colWrapper) {
+                        const stream = streams[username];
+                        const matchName = username.includes(query);
+                        const matchCategory = selectedCategory === "" || stream.label1 === selectedCategory;
+                        let matchStatus = true;
+                        if (currentStatusFilter === 'live') matchStatus = stream.status === 'live';
+                        else if (currentStatusFilter === 'offline') matchStatus = stream.status === 'offline' || stream.status === 'checking';
 
-        // === FUNGSI AKSI UTAMA (Dengan PIN Guard) ===
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
-                const accountsToImport = [];
-                rows.forEach(row => {
-                    if (row.length > 0 && typeof row[0] === 'string') {
-                        let username = row[0].trim().replace(/[@\s]/g, '');
-                        if (username && username.length > 2) {
-                            accountsToImport.push({ username: username, label1: (row.length > 1 && row[1]) ? String(row[1]).trim() : 'Tanpa Label 1', label2: (row.length > 2 && row[2]) ? String(row[2]).trim() : 'Tanpa Label 2' });
+                        if (matchName && matchCategory && matchStatus) colWrapper.style.display = 'block';
+                        else colWrapper.style.display = 'none';
+                    }
+                }
+            }
+
+            function switchTab(username, tab) {
+                const btnChat = document.getElementById(`tab-btn-chat-${username}`);
+                const btnGift = document.getElementById(`tab-btn-gift-${username}`);
+                const contentChat = document.getElementById(`tab-chat-${username}`);
+                const contentGift = document.getElementById(`tab-gift-${username}`);
+
+                const activeClass = 'btn btn-link text-decoration-none flex-fill fw-bold border-bottom border-2 shadow-none';
+                const inactiveClass = 'btn btn-link text-decoration-none flex-fill fw-bold border-bottom border-2 border-transparent text-muted-custom shadow-none';
+
+                if (tab === 'chat') {
+                    btnChat.className = `${activeClass} border-info text-info glass-panel-darker`;
+                    btnGift.className = inactiveClass;
+                    contentChat.classList.remove('d-none'); contentGift.classList.add('d-none');
+                } else {
+                    btnGift.className = `${activeClass} border-warning text-warning glass-panel-darker`;
+                    btnChat.className = inactiveClass;
+                    contentChat.classList.add('d-none'); contentGift.classList.remove('d-none');
+                }
+            }
+
+            function formatNumber(num) {
+                if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+                if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+                return num;
+            }
+
+            function getTodayDate() { return new Date().toISOString().split('T')[0]; }
+
+            // === FUNGSI AKSI UTAMA (Dengan PIN Guard) ===
+            function handleFileUpload(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+                    const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
+                    const accountsToImport = [];
+                    rows.forEach(row => {
+                        if (row.length > 0 && typeof row[0] === 'string') {
+                            let username = row[0].trim().replace(/[@\s]/g, '');
+                            if (username && username.length > 2) {
+                                accountsToImport.push({ username: username, label1: (row.length > 1 && row[1]) ? String(row[1]).trim() : 'Tanpa Label 1', label2: (row.length > 2 && row[2]) ? String(row[2]).trim() : 'Tanpa Label 2' });
+                            }
+                        }
+                    });
+                    if (accountsToImport.length > 0) {
+                        Swalert.fire({
+                            title: 'Mulai Import?', text: `Akan memuat ${accountsToImport.length} akun secara bertahap.`, icon: 'info', showCancelButton: true, confirmButtonText: '<i class="fas fa-play me-1"></i> Mulai', cancelButtonText: 'Batal'
+                        }).then((result) => { if (result.isConfirmed) socket.emit('addBulkStreams', accountsToImport); });
+                    } else { Swalert.fire('Data Kosong', 'Tidak ada username valid di Kolom A.', 'error'); }
+                };
+                reader.readAsArrayBuffer(file);
+                event.target.value = '';
+            }
+
+            function addStream() {
+                requirePin(() => {
+                    const username = document.getElementById('usernameInput').value.trim().toLowerCase();
+                    const label1 = document.getElementById('label1Input').value.trim() || 'Tanpa Label 1';
+                    const label2 = document.getElementById('label2Input').value.trim() || 'Tanpa Label 2';
+
+                    if (!username) return Swalert.fire('Input Kosong', 'Harap masukkan username TikTok.', 'warning');
+                    if (streams[username]) return Swalert.fire('Sudah Ada', 'Akun ini sudah ada di dashboard!', 'info');
+
+                    socket.emit('addStream', { username, label1, label2 });
+
+                    document.getElementById('usernameInput').value = ''; document.getElementById('label1Input').value = ''; document.getElementById('label2Input').value = '';
+                    document.getElementById('searchInput').value = ''; document.getElementById('categoryFilter').value = '';
+
+                    const modalEl = document.getElementById('addAccountModal');
+                    let modalInstance = bootstrap.Modal.getInstance(modalEl);
+                    if (modalInstance) modalInstance.hide();
+                    setStatusFilter('all'); filterStreams();
+                });
+            }
+
+            function removeStream(username) {
+                requirePin(() => {
+                    Swalert.fire({
+                        title: 'Hapus Pantauan?', text: `Yakin ingin menghapus @${username}?`, icon: 'warning',
+                        showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Ya, Hapus!', cancelButtonText: 'Batal'
+                    }).then((result) => { if (result.isConfirmed) socket.emit('removeStream', username); });
+                });
+            }
+
+            function clearActivity(username) {
+                requirePin(() => {
+                    Swalert.fire({
+                        title: 'Bersihkan Aktivitas?', text: `Data chat dan gift untuk @${username} akan kembali ke 0.`, icon: 'warning',
+                        showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
+                    }).then((result) => { if (result.isConfirmed) socket.emit('clearActivity', username); });
+                });
+            }
+
+            function clearAllActivities() {
+                requirePin(() => {
+                    Swalert.fire({
+                        title: 'Bersihkan SEMUA Aktivitas?', text: 'Data chat dan gift untuk SELURUH AKUN akan kembali ke 0!', icon: 'warning',
+                        showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
+                    }).then((result) => { if (result.isConfirmed) socket.emit('clearAllActivities'); });
+                });
+            }
+
+            function removeAllStreams() {
+                requirePin(() => {
+                    Swalert.fire({
+                        title: 'Hapus SEMUA Akun?', text: 'Semua akun akan dihapus permanen dari dashboard!', icon: 'warning',
+                        showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: '<i class="fas fa-user-times me-1"></i>Ya, Hapus Semua!', cancelButtonText: 'Batal'
+                    }).then((result) => { if (result.isConfirmed) socket.emit('removeAllStreams'); });
+                });
+            }
+
+            // === FUNGSI EXPORT (Bebas PIN) ===
+            function exportGlobalExcel(tipeLaporan = 'Semua Data') {
+                Swalert.fire({ title: `Menyiapkan Laporan ${tipeLaporan}...`, text: 'Merekap seluruh data dan riwayat interaksi.', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } });
+                setTimeout(() => {
+                    const wb = XLSX.utils.book_new();
+                    let judulLaporan = tipeLaporan === 'Semua Data' ? "LAPORAN GLOBAL MULTI-LIVE TIKTOK" : `LAPORAN TIKTOK LIVE - ${tipeLaporan.toUpperCase()}`;
+                    let summaryData = [[judulLaporan], ["Tanggal Export", new Date().toLocaleString('id-ID')], [], ["Username", "Label 1", "Label 2", "Status", "Durasi Sesi", "View Terakhir", "View Tertinggi (Peak)", "Total Likes", "Total Chat", "Total Gift"]];
+                    let sumViewersPeak = 0, sumLikes = 0, sumChat = 0, sumGift = 0;
+
+                    for (let user in streams) {
+                        const s = streams[user]; const durasi = document.getElementById(`duration-${user}`).textContent || "00:00:00";
+                        const viewTerakhir = s.lastViewers || 0;
+                        const viewPeak = s.maxViewers || 0;
+                        const totalLikes = s.likes || 0;
+                        const totalChat = s.chatCount || 0;
+                        const totalGift = s.giftCount || 0;
+
+                        summaryData.push([user, s.label1, s.label2, s.status.toUpperCase(), durasi, viewTerakhir, viewPeak, totalLikes, totalChat, totalGift]);
+                        sumViewersPeak += viewPeak; sumLikes += totalLikes; sumChat += totalChat; sumGift += totalGift;
+                    }
+                    summaryData.push([]); summaryData.push(["TOTAL KESELURUHAN", "", "", "", "", "", sumViewersPeak, sumLikes, sumChat, sumGift]);
+
+                    const wsSummary = XLSX.utils.aoa_to_sheet(summaryData); XLSX.utils.book_append_sheet(wb, wsSummary, "Ringkasan");
+
+                    for (let user in streams) {
+                        const s = streams[user];
+                        if (s.logs && s.logs.length > 0) {
+                            let accountLogData = [[`RIWAYAT INTERAKSI - @${user}`], [`Label: ${s.label1} | ${s.label2}`], [], ["Waktu", "Tipe", "Username Pengirim", "Pesan / Detail"]];
+                            s.logs.forEach(log => { accountLogData.push([log.time, log.type, log.user, log.detail]); });
+                            const wsAccount = XLSX.utils.aoa_to_sheet(accountLogData);
+                            let sheetName = String(user).substring(0, 30);
+                            XLSX.utils.book_append_sheet(wb, wsAccount, sheetName);
                         }
                     }
-                });
-                if (accountsToImport.length > 0) {
-                    Swalert.fire({
-                        title: 'Mulai Import?', text: `Akan memuat ${accountsToImport.length} akun secara bertahap.`, icon: 'info', showCancelButton: true, confirmButtonText: '<i class="fas fa-play me-1"></i> Mulai', cancelButtonText: 'Batal'
-                    }).then((result) => { if (result.isConfirmed) socket.emit('addBulkStreams', accountsToImport); });
-                } else { Swalert.fire('Data Kosong', 'Tidak ada username valid di Kolom A.', 'error'); }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value = '';
-        }
 
-        function addStream() {
-            requirePin(() => {
-                const username = document.getElementById('usernameInput').value.trim().toLowerCase();
-                const label1 = document.getElementById('label1Input').value.trim() || 'Tanpa Label 1';
-                const label2 = document.getElementById('label2Input').value.trim() || 'Tanpa Label 2';
+                    let formatNamaFile = `Laporan_${tipeLaporan.replace(/\s+/g, '_')}_TikTok_${getTodayDate()}.xlsx`;
+                    XLSX.writeFile(wb, formatNamaFile);
+                    Swalert.close(); Toast.fire({ icon: 'success', title: `Laporan ${tipeLaporan} berhasil diunduh!` });
+                }, 500);
+            }
 
-                if (!username) return Swalert.fire('Input Kosong', 'Harap masukkan username TikTok.', 'warning');
-                if (streams[username]) return Swalert.fire('Sudah Ada', 'Akun ini sudah ada di dashboard!', 'info');
-                
-                socket.emit('addStream', { username, label1, label2 });
-                
-                document.getElementById('usernameInput').value = ''; document.getElementById('label1Input').value = ''; document.getElementById('label2Input').value = '';
-                document.getElementById('searchInput').value = ''; document.getElementById('categoryFilter').value = ''; 
-                
-                const modalEl = document.getElementById('addAccountModal');
-                let modalInstance = bootstrap.Modal.getInstance(modalEl);
-                if(modalInstance) modalInstance.hide();
-                setStatusFilter('all'); filterStreams();
-            });
-        }
+            function exportData(username) {
+                const stream = streams[username]; if (!stream) return;
+                const duration = document.getElementById(`duration-${username}`).textContent || "00:00:00";
+                const viewTerakhir = stream.lastViewers || 0;
+                const viewPeak = stream.maxViewers || 0;
+                const totalLikes = stream.likes || 0;
+                const totalChat = stream.chatCount || 0;
+                const totalGift = stream.giftCount || 0;
 
-        function removeStream(username) {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Hapus Pantauan?', text: `Yakin ingin menghapus @${username}?`, icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Ya, Hapus!', cancelButtonText: 'Batal'
-                }).then((result) => { if (result.isConfirmed) socket.emit('removeStream', username); });
-            });
-        }
+                let csv = `LAPORAN LIVE TIKTOK: @${username}\nLabel 1,${stream.label1}\nLabel 2,${stream.label2}\nStatus Saat Ini,${stream.status.toUpperCase()}\nDurasi Sesi,${duration}\nView Terakhir,${viewTerakhir}\nView Tertinggi (Peak),${viewPeak}\nTotal Likes,${totalLikes}\nTotal Chat,${totalChat}\nTotal Gift,${totalGift}\n\nWaktu,Tipe,Username Pengirim,Pesan/Detail\n`;
+                stream.logs.forEach(log => { csv += `${log.time},${log.type},${log.user},"${log.detail.replace(/"/g, '""')}"\n`; });
+                const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `Laporan_${username}_${getTodayDate()}.csv`; a.click(); URL.revokeObjectURL(url);
+            }
 
-        function clearActivity(username) {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Bersihkan Aktivitas?', text: `Data chat dan gift untuk @${username} akan kembali ke 0.`, icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
-                }).then((result) => { if (result.isConfirmed) socket.emit('clearActivity', username); });
-            });
-        }
+            // === UI CARD BUILDER ===
+            function createStreamCard(username, status, info, logsFromServer = [], chatCountFromServer = 0, giftCountFromServer = 0) {
+                if (streams[username]) return;
+                const label1 = info ? (info.label1 || 'Tanpa Label 1') : 'Tanpa Label 1';
+                const label2 = info ? (info.label2 || 'Tanpa Label 2') : 'Tanpa Label 2';
 
-        function clearAllActivities() {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Bersihkan SEMUA Aktivitas?', text: 'Data chat dan gift untuk SELURUH AKUN akan kembali ke 0!', icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
-                }).then((result) => { if (result.isConfirmed) socket.emit('clearAllActivities'); });
-            });
-        }
+                streams[username] = {
+                    username, status, startTime: info ? info.startTime : null, label1, label2,
+                    logs: logsFromServer, chatCount: chatCountFromServer, giftCount: giftCountFromServer,
+                    lastViewers: info ? (info.viewers || 0) : 0, maxViewers: info ? (info.viewers || 0) : 0, likes: info ? (info.likes || 0) : 0
+                };
 
-        function removeAllStreams() {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Hapus SEMUA Akun?', text: 'Semua akun akan dihapus permanen dari dashboard!', icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: '<i class="fas fa-user-times me-1"></i>Ya, Hapus Semua!', cancelButtonText: 'Batal'
-                }).then((result) => { if (result.isConfirmed) socket.emit('removeAllStreams'); });
-            });
-        }
+                const grid = document.getElementById('streamsGrid');
+                const col = document.createElement('div');
+                col.className = 'col transition-all'; col.id = `col-${username}`;
 
-        // === FUNGSI EXPORT (Bebas PIN) ===
-        function exportGlobalExcel(tipeLaporan = 'Semua Data') {
-            Swalert.fire({ title: `Menyiapkan Laporan ${tipeLaporan}...`, text: 'Merekap seluruh data dan riwayat interaksi.', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
-            setTimeout(() => {
-                const wb = XLSX.utils.book_new();
-                let judulLaporan = tipeLaporan === 'Semua Data' ? "LAPORAN GLOBAL MULTI-LIVE TIKTOK" : `LAPORAN TIKTOK LIVE - ${tipeLaporan.toUpperCase()}`;
-                let summaryData = [ [judulLaporan], ["Tanggal Export", new Date().toLocaleString('id-ID')], [], ["Username", "Label 1", "Label 2", "Status", "Durasi Sesi", "View Terakhir", "View Tertinggi (Peak)", "Total Likes", "Total Chat", "Total Gift"] ];
-                let sumViewersPeak = 0, sumLikes = 0, sumChat = 0, sumGift = 0;
+                let badgeClass = status === 'live' ? 'bg-success animate-pulse' : (status === 'checking' ? 'bg-warning text-dark' : 'bg-danger');
+                let badgeIcon = status === 'live' ? '<i class="fas fa-circle" style="font-size:7px"></i>' : (status === 'checking' ? '<i class="fas fa-sync fa-spin" style="font-size:9px"></i>' : '<i class="fas fa-power-off" style="font-size:9px"></i>');
+                let badgeText = status === 'live' ? 'ONLINE' : (status === 'checking' ? 'CEK...' : 'OFFLINE');
+                let offlineClass = status === 'live' ? '' : 'card-offline';
 
-                for (let user in streams) {
-                    const s = streams[user]; const durasi = document.getElementById(`duration-${user}`).textContent || "00:00:00";
-                    const viewTerakhir = s.lastViewers || 0;
-                    const viewPeak = s.maxViewers || 0;
-                    const totalLikes = s.likes || 0;
-                    const totalChat = s.chatCount || 0;
-                    const totalGift = s.giftCount || 0;
-                    
-                    summaryData.push([user, s.label1, s.label2, s.status.toUpperCase(), durasi, viewTerakhir, viewPeak, totalLikes, totalChat, totalGift]);
-                    sumViewersPeak += viewPeak; sumLikes += totalLikes; sumChat += totalChat; sumGift += totalGift;
-                }
-                summaryData.push([]); summaryData.push(["TOTAL KESELURUHAN", "", "", "", "", "", sumViewersPeak, sumLikes, sumChat, sumGift]);
-                
-                const wsSummary = XLSX.utils.aoa_to_sheet(summaryData); XLSX.utils.book_append_sheet(wb, wsSummary, "Ringkasan");
-
-                for (let user in streams) {
-                    const s = streams[user];
-                    if (s.logs && s.logs.length > 0) {
-                        let accountLogData = [ [`RIWAYAT INTERAKSI - @${user}`], [`Label: ${s.label1} | ${s.label2}`], [], ["Waktu", "Tipe", "Username Pengirim", "Pesan / Detail"] ];
-                        s.logs.forEach(log => { accountLogData.push([log.time, log.type, log.user, log.detail]); });
-                        const wsAccount = XLSX.utils.aoa_to_sheet(accountLogData);
-                        let sheetName = String(user).substring(0, 30);
-                        XLSX.utils.book_append_sheet(wb, wsAccount, sheetName);
-                    }
-                }
-                
-                let formatNamaFile = `Laporan_${tipeLaporan.replace(/\s+/g, '_')}_TikTok_${getTodayDate()}.xlsx`;
-                XLSX.writeFile(wb, formatNamaFile);
-                Swalert.close(); Toast.fire({ icon: 'success', title: `Laporan ${tipeLaporan} berhasil diunduh!` });
-            }, 500); 
-        }
-
-        function exportData(username) {
-            const stream = streams[username]; if (!stream) return;
-            const duration = document.getElementById(`duration-${username}`).textContent || "00:00:00";
-            const viewTerakhir = stream.lastViewers || 0;
-            const viewPeak = stream.maxViewers || 0;
-            const totalLikes = stream.likes || 0;
-            const totalChat = stream.chatCount || 0;
-            const totalGift = stream.giftCount || 0;
-            
-            let csv = `LAPORAN LIVE TIKTOK: @${username}\nLabel 1,${stream.label1}\nLabel 2,${stream.label2}\nStatus Saat Ini,${stream.status.toUpperCase()}\nDurasi Sesi,${duration}\nView Terakhir,${viewTerakhir}\nView Tertinggi (Peak),${viewPeak}\nTotal Likes,${totalLikes}\nTotal Chat,${totalChat}\nTotal Gift,${totalGift}\n\nWaktu,Tipe,Username Pengirim,Pesan/Detail\n`;
-            stream.logs.forEach(log => { csv += `${log.time},${log.type},${log.user},"${log.detail.replace(/"/g, '""')}"\n`; });
-            const blob = new Blob(["\uFEFF" + csv], { type: 'text/csv;charset=utf-8;' });
-            const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `Laporan_${username}_${getTodayDate()}.csv`; a.click(); URL.revokeObjectURL(url);
-        }
-
-        // === UI CARD BUILDER ===
-        function createStreamCard(username, status, info, logsFromServer = [], chatCountFromServer = 0, giftCountFromServer = 0) {
-            if (streams[username]) return; 
-            const label1 = info ? (info.label1 || 'Tanpa Label 1') : 'Tanpa Label 1';
-            const label2 = info ? (info.label2 || 'Tanpa Label 2') : 'Tanpa Label 2';
-            
-            streams[username] = { 
-                username, status, startTime: info ? info.startTime : null, label1, label2, 
-                logs: logsFromServer, chatCount: chatCountFromServer, giftCount: giftCountFromServer, 
-                lastViewers: info ? (info.viewers || 0) : 0, maxViewers: info ? (info.viewers || 0) : 0, likes: info ? (info.likes || 0) : 0 
-            };
-
-            const grid = document.getElementById('streamsGrid');
-            const col = document.createElement('div');
-            col.className = 'col transition-all'; col.id = `col-${username}`;
-            
-            let badgeClass = status === 'live' ? 'bg-success animate-pulse' : (status === 'checking' ? 'bg-warning text-dark' : 'bg-danger');
-            let badgeIcon = status === 'live' ? '<i class="fas fa-circle" style="font-size:7px"></i>' : (status === 'checking' ? '<i class="fas fa-sync fa-spin" style="font-size:9px"></i>' : '<i class="fas fa-power-off" style="font-size:9px"></i>');
-            let badgeText = status === 'live' ? 'ONLINE' : (status === 'checking' ? 'CEK...' : 'OFFLINE');
-            let offlineClass = status === 'live' ? '' : 'card-offline';
-
-            col.innerHTML = `
+                col.innerHTML = `
                 <div id="card-${username}" class="card glass-panel h-100 shadow border-panel ${offlineClass}">
                     <div class="card-header border-bottom-glass d-flex justify-content-between align-items-start p-3 bg-transparent">
                         <div class="pe-2 text-truncate w-100">
@@ -507,237 +597,285 @@
                     </div>
                 </div>
             `;
-            grid.appendChild(col); 
-            filterStreams(); 
+                grid.appendChild(col);
+                filterStreams();
 
-            // Render log awal
-            if (logsFromServer.length > 0) {
-                const tabChat = document.getElementById(`tab-chat-${username}`);
-                const tabGift = document.getElementById(`tab-gift-${username}`);
-                
-                if (logsFromServer.some(l => l.type === 'Chat')) tabChat.innerHTML = '';
-                if (logsFromServer.some(l => l.type === 'Gift')) tabGift.innerHTML = '';
+                // Render log awal
+                if (logsFromServer.length > 0) {
+                    const tabChat = document.getElementById(`tab-chat-${username}`);
+                    const tabGift = document.getElementById(`tab-gift-${username}`);
 
-                logsFromServer.forEach(log => {
-                    if (log.type === 'Chat') {
-                        const div = document.createElement('div'); div.className = 'chat-line';
-                        div.innerHTML = `<span class="fw-bold" style="color: #0ea5e9;">@${log.user}</span>: <span class="text-light">${log.detail}</span>`;
-                        tabChat.appendChild(div);
-                    } else if (log.type === 'Gift') {
-                        const div = document.createElement('div'); div.className = 'gift-line';
-                        div.innerHTML = `<i class="fas fa-gift me-1 text-warning"></i> <span class="fw-bold text-white">@${log.user}</span> mengirim ${log.detail}`;
-                        tabGift.appendChild(div);
-                    }
-                });
-                tabChat.scrollTop = tabChat.scrollHeight;
-                tabGift.scrollTop = tabGift.scrollHeight;
-            }
-        }
+                    if (logsFromServer.some(l => l.type === 'Chat')) tabChat.innerHTML = '';
+                    if (logsFromServer.some(l => l.type === 'Gift')) tabGift.innerHTML = '';
 
-        // === SOCKET LISTENERS UNTUK MENANGKAP DATA DARI SERVER ===
-        socket.on('initStreams', (activeStreams) => {
-            activeStreams.forEach(data => createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount)); updateCategoryDropdown();
-        });
-        
-        socket.on('streamAdded', (data) => {
-            createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount); updateCategoryDropdown();
-        });
-
-        socket.on('streamRemoved', (data) => {
-            const col = document.getElementById(`col-${data.username}`);
-            if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
-            delete streams[data.username]; updateCategoryDropdown();
-        });
-
-        socket.on('allStreamsRemoved', () => {
-            for (let username in streams) {
-                const col = document.getElementById(`col-${username}`);
-                if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
-                delete streams[username];
-            }
-            updateCategoryDropdown();
-            Toast.fire({ icon: 'success', title: `Seluruh akun berhasil dihapus!` });
-        });
-        
-        socket.on('activityCleared', (username) => {
-            if (streams[username]) {
-                streams[username].logs = []; streams[username].chatCount = 0; streams[username].giftCount = 0;
-                const chatCountEl = document.getElementById(`count-chat-${username}`); const giftCountEl = document.getElementById(`count-gift-${username}`);
-                if(chatCountEl) chatCountEl.textContent = "0"; if(giftCountEl) giftCountEl.textContent = "0";
-                const tabChat = document.getElementById(`tab-chat-${username}`); const tabGift = document.getElementById(`tab-gift-${username}`);
-                if(tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
-                if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
-                Toast.fire({ icon: 'success', title: `Aktivitas @${username} dibersihkan!` });
-            }
-        });
-
-        socket.on('allActivitiesCleared', () => {
-            for (let username in streams) {
-                streams[username].logs = []; streams[username].chatCount = 0; streams[username].giftCount = 0;
-                const chatCountEl = document.getElementById(`count-chat-${username}`); const giftCountEl = document.getElementById(`count-gift-${username}`);
-                if(chatCountEl) chatCountEl.textContent = "0"; if(giftCountEl) giftCountEl.textContent = "0";
-                const tabChat = document.getElementById(`tab-chat-${username}`); const tabGift = document.getElementById(`tab-gift-${username}`);
-                if(tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
-                if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
-            }
-            Toast.fire({ icon: 'success', title: `Seluruh log aktivitas dibersihkan!` });
-        });
-
-        socket.on('streamStatusChanged', (data) => {
-            if (!streams[data.username]) return;
-            streams[data.username].status = data.status;
-            if (data.info && data.info.startTime) streams[data.username].startTime = data.info.startTime; 
-            const badge = document.getElementById(`status-${data.username}`); const card = document.getElementById(`card-${data.username}`);
-            if (!badge || !card) return;
-            badge.className = 'badge rounded-pill fw-normal shadow-sm d-inline-flex align-items-center gap-1';
-            if (data.status === 'live') {
-                badge.classList.add('bg-success'); badge.innerHTML = '<i class="fas fa-circle" style="font-size:7px"></i> ONLINE'; card.classList.remove('card-offline');
-            } else if (data.status === 'offline') {
-                badge.classList.add('bg-danger'); badge.innerHTML = '<i class="fas fa-power-off" style="font-size:9px"></i> OFFLINE'; card.classList.add('card-offline'); document.getElementById(`viewers-last-${data.username}`).textContent = "0"; 
-            } else if (data.status === 'checking') {
-                badge.classList.add('bg-warning', 'text-dark'); badge.innerHTML = '<i class="fas fa-sync fa-spin" style="font-size:9px"></i> CEK...';
-            }
-            filterStreams();
-        });
-        
-        socket.on('streamUpdate', (data) => {
-            if (!streams[data.username]) return;
-            if (data.viewers !== undefined) {
-                streams[data.username].lastViewers = data.viewers; streams[data.username].maxViewers = Math.max(streams[data.username].maxViewers, data.viewers);
-                const elLast = document.getElementById(`viewers-last-${data.username}`); const elPeak = document.getElementById(`viewers-peak-${data.username}`);
-                if (elLast) elLast.textContent = formatNumber(data.viewers); if (elPeak) elPeak.textContent = formatNumber(streams[data.username].maxViewers);
-            }
-            if (data.likes !== undefined) {
-                streams[data.username].likes = data.likes; const el = document.getElementById(`likes-${data.username}`); if (el) el.textContent = formatNumber(data.likes);
-            }
-        });
-
-        socket.on('streamChat', (data) => {
-            if (!streams[data.username]) return;
-            streams[data.username].chatCount = data.chatCount; streams[data.username].logs.push(data.log);
-            document.getElementById(`count-chat-${data.username}`).textContent = formatNumber(data.chatCount);
-            const box = document.getElementById(`tab-chat-${data.username}`); if (!box) return;
-            if (box.innerHTML.includes('Menunggu Chat')) box.innerHTML = ''; 
-            const div = document.createElement('div'); div.className = 'chat-line';
-            div.innerHTML = `<span class="fw-bold" style="color: #0ea5e9;">@${data.log.user}</span>: <span class="text-light">${data.log.detail}</span>`;
-            box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
-        });
-        
-        socket.on('streamGift', (data) => {
-            if (!streams[data.username]) return;
-            streams[data.username].giftCount = data.giftCount; streams[data.username].logs.push(data.log);
-            document.getElementById(`count-gift-${data.username}`).textContent = formatNumber(data.giftCount);
-            const box = document.getElementById(`tab-gift-${data.username}`); if (!box) return;
-            if (box.innerHTML.includes('Menunggu Gift')) box.innerHTML = '';
-            const div = document.createElement('div'); div.className = 'gift-line';
-            div.innerHTML = `<i class="fas fa-gift me-1 text-warning"></i> <span class="fw-bold text-white">@${data.log.user}</span> mengirim ${data.log.detail}`;
-            box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
-        });
-
-        socket.on('systemMsg', (data) => {
-            if (data.type === 'error') { Toast.fire({ icon: 'error', title: data.msg }); } 
-            else if (data.type === 'success') { Toast.fire({ icon: 'success', title: data.msg }); }
-        });
-
-        socket.on('importProgress', (data) => {
-            const widget = document.getElementById('importProgressWidget'); const bar = document.getElementById('importProgressBar');
-            widget.classList.add('show'); const percentage = (data.current / data.total) * 100; bar.style.width = `${percentage}%`;
-            document.getElementById('importCountText').innerText = `${data.current} / ${data.total}`; document.getElementById('importCurrentUsername').innerHTML = `Membuka: <span class="text-white fw-bold">@${data.username}</span>`;
-        });
-
-        socket.on('importComplete', () => {
-            const widget = document.getElementById('importProgressWidget');
-            setTimeout(() => { widget.classList.remove('show'); setTimeout(() => { document.getElementById('importProgressBar').style.width = '0%'; }, 500); }, 3000);
-        });
-
-        socket.on('serverStats', (data) => {
-            const memEl = document.getElementById('server-memory-usage');
-            if (memEl && data.memory) { memEl.innerHTML = `<i class="fas fa-memory me-1"></i> ${data.memory} MB`; }
-        });
-
-        // === UTILS TIMER & UPDATE STATISTIK GLOBAL ===
-        setInterval(() => {
-            const now = Date.now();
-            let globalAccounts = 0, globalViewersPeak = 0, globalLikes = 0, globalInteractions = 0;
-
-            for (let user in streams) {
-                const stream = streams[user];
-                globalAccounts++; globalViewersPeak += stream.maxViewers; globalLikes += stream.likes; globalInteractions += (stream.chatCount + stream.giftCount);
-
-                if (stream.status === 'live' && stream.startTime) {
-                    const diff = Math.floor((now - stream.startTime) / 1000);
-                    const h = String(Math.floor(diff / 3600)).padStart(2, '0');
-                    const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
-                    const s = String(diff % 60).padStart(2, '0');
-                    const durationEl = document.getElementById(`duration-${user}`);
-                    if (durationEl) durationEl.textContent = `${h}:${m}:${s}`;
+                    logsFromServer.forEach(log => {
+                        if (log.type === 'Chat') {
+                            const div = document.createElement('div'); div.className = 'chat-line';
+                            div.innerHTML = `<span class="fw-bold" style="color: #0ea5e9;">@${log.user}</span>: <span class="text-light">${log.detail}</span>`;
+                            tabChat.appendChild(div);
+                        } else if (log.type === 'Gift') {
+                            const div = document.createElement('div'); div.className = 'gift-line';
+                            div.innerHTML = `<i class="fas fa-gift me-1 text-warning"></i> <span class="fw-bold text-white">@${log.user}</span> mengirim ${log.detail}`;
+                            tabGift.appendChild(div);
+                        }
+                    });
+                    tabChat.scrollTop = tabChat.scrollHeight;
+                    tabGift.scrollTop = tabGift.scrollHeight;
                 }
             }
-            document.getElementById('global-accounts').textContent = formatNumber(globalAccounts);
-            document.getElementById('global-viewers-peak').textContent = formatNumber(globalViewersPeak);
-            document.getElementById('global-likes').textContent = formatNumber(globalLikes);
-            document.getElementById('global-interactions').textContent = formatNumber(globalInteractions);
-        }, 1000);
 
-    </script>
+            // === SOCKET LISTENERS UNTUK MENANGKAP DATA DARI SERVER ===
+            socket.on('initStreams', (activeStreams) => {
+                activeStreams.forEach(data => createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount)); updateCategoryDropdown();
+            });
+
+            socket.on('streamAdded', (data) => {
+                createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount); updateCategoryDropdown();
+            });
+
+            socket.on('streamRemoved', (data) => {
+                const col = document.getElementById(`col-${data.username}`);
+                if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
+                delete streams[data.username]; updateCategoryDropdown();
+            });
+
+            socket.on('allStreamsRemoved', () => {
+                for (let username in streams) {
+                    const col = document.getElementById(`col-${username}`);
+                    if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
+                    delete streams[username];
+                }
+                updateCategoryDropdown();
+                Toast.fire({ icon: 'success', title: `Seluruh akun berhasil dihapus!` });
+            });
+
+            socket.on('activityCleared', (username) => {
+                if (streams[username]) {
+                    streams[username].logs = []; streams[username].chatCount = 0; streams[username].giftCount = 0;
+                    const chatCountEl = document.getElementById(`count-chat-${username}`); const giftCountEl = document.getElementById(`count-gift-${username}`);
+                    if (chatCountEl) chatCountEl.textContent = "0"; if (giftCountEl) giftCountEl.textContent = "0";
+                    const tabChat = document.getElementById(`tab-chat-${username}`); const tabGift = document.getElementById(`tab-gift-${username}`);
+                    if (tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
+                    if (tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
+                    Toast.fire({ icon: 'success', title: `Aktivitas @${username} dibersihkan!` });
+                }
+            });
+
+            socket.on('allActivitiesCleared', () => {
+                for (let username in streams) {
+                    streams[username].logs = []; streams[username].chatCount = 0; streams[username].giftCount = 0;
+                    const chatCountEl = document.getElementById(`count-chat-${username}`); const giftCountEl = document.getElementById(`count-gift-${username}`);
+                    if (chatCountEl) chatCountEl.textContent = "0"; if (giftCountEl) giftCountEl.textContent = "0";
+                    const tabChat = document.getElementById(`tab-chat-${username}`); const tabGift = document.getElementById(`tab-gift-${username}`);
+                    if (tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
+                    if (tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
+                }
+                Toast.fire({ icon: 'success', title: `Seluruh log aktivitas dibersihkan!` });
+            });
+
+            socket.on('streamStatusChanged', (data) => {
+                if (!streams[data.username]) return;
+                streams[data.username].status = data.status;
+                if (data.info && data.info.startTime) streams[data.username].startTime = data.info.startTime;
+                const badge = document.getElementById(`status-${data.username}`); const card = document.getElementById(`card-${data.username}`);
+                if (!badge || !card) return;
+                badge.className = 'badge rounded-pill fw-normal shadow-sm d-inline-flex align-items-center gap-1';
+                if (data.status === 'live') {
+                    badge.classList.add('bg-success'); badge.innerHTML = '<i class="fas fa-circle" style="font-size:7px"></i> ONLINE'; card.classList.remove('card-offline');
+                } else if (data.status === 'offline') {
+                    badge.classList.add('bg-danger'); badge.innerHTML = '<i class="fas fa-power-off" style="font-size:9px"></i> OFFLINE'; card.classList.add('card-offline'); document.getElementById(`viewers-last-${data.username}`).textContent = "0";
+                } else if (data.status === 'checking') {
+                    badge.classList.add('bg-warning', 'text-dark'); badge.innerHTML = '<i class="fas fa-sync fa-spin" style="font-size:9px"></i> CEK...';
+                }
+                filterStreams();
+            });
+
+            socket.on('streamUpdate', (data) => {
+                if (!streams[data.username]) return;
+                if (data.viewers !== undefined) {
+                    streams[data.username].lastViewers = data.viewers; streams[data.username].maxViewers = Math.max(streams[data.username].maxViewers, data.viewers);
+                    const elLast = document.getElementById(`viewers-last-${data.username}`); const elPeak = document.getElementById(`viewers-peak-${data.username}`);
+                    if (elLast) elLast.textContent = formatNumber(data.viewers); if (elPeak) elPeak.textContent = formatNumber(streams[data.username].maxViewers);
+                }
+                if (data.likes !== undefined) {
+                    streams[data.username].likes = data.likes; const el = document.getElementById(`likes-${data.username}`); if (el) el.textContent = formatNumber(data.likes);
+                }
+            });
+
+            socket.on('streamChat', (data) => {
+                if (!streams[data.username]) return;
+                streams[data.username].chatCount = data.chatCount; streams[data.username].logs.push(data.log);
+                document.getElementById(`count-chat-${data.username}`).textContent = formatNumber(data.chatCount);
+                const box = document.getElementById(`tab-chat-${data.username}`); if (!box) return;
+                if (box.innerHTML.includes('Menunggu Chat')) box.innerHTML = '';
+                const div = document.createElement('div'); div.className = 'chat-line';
+                div.innerHTML = `<span class="fw-bold" style="color: #0ea5e9;">@${data.log.user}</span>: <span class="text-light">${data.log.detail}</span>`;
+                box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
+            });
+
+            socket.on('streamGift', (data) => {
+                if (!streams[data.username]) return;
+                streams[data.username].giftCount = data.giftCount; streams[data.username].logs.push(data.log);
+                document.getElementById(`count-gift-${data.username}`).textContent = formatNumber(data.giftCount);
+                const box = document.getElementById(`tab-gift-${data.username}`); if (!box) return;
+                if (box.innerHTML.includes('Menunggu Gift')) box.innerHTML = '';
+                const div = document.createElement('div'); div.className = 'gift-line';
+                div.innerHTML = `<i class="fas fa-gift me-1 text-warning"></i> <span class="fw-bold text-white">@${data.log.user}</span> mengirim ${data.log.detail}`;
+                box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
+            });
+
+            socket.on('systemMsg', (data) => {
+                if (data.type === 'error') { Toast.fire({ icon: 'error', title: data.msg }); }
+                else if (data.type === 'success') { Toast.fire({ icon: 'success', title: data.msg }); }
+            });
+
+            socket.on('importProgress', (data) => {
+                const widget = document.getElementById('importProgressWidget'); const bar = document.getElementById('importProgressBar');
+                widget.classList.add('show'); const percentage = (data.current / data.total) * 100; bar.style.width = `${percentage}%`;
+                document.getElementById('importCountText').innerText = `${data.current} / ${data.total}`; document.getElementById('importCurrentUsername').innerHTML = `Membuka: <span class="text-white fw-bold">@${data.username}</span>`;
+            });
+
+            socket.on('importComplete', () => {
+                const widget = document.getElementById('importProgressWidget');
+                setTimeout(() => { widget.classList.remove('show'); setTimeout(() => { document.getElementById('importProgressBar').style.width = '0%'; }, 500); }, 3000);
+            });
+
+            socket.on('serverStats', (data) => {
+                const memEl = document.getElementById('server-memory-usage');
+                if (memEl && data.memory) { memEl.innerHTML = `<i class="fas fa-memory me-1"></i> ${data.memory} MB`; }
+            });
+
+            // === UTILS TIMER & UPDATE STATISTIK GLOBAL ===
+            setInterval(() => {
+                const now = Date.now();
+                let globalAccounts = 0, globalViewersPeak = 0, globalLikes = 0, globalInteractions = 0;
+
+                for (let user in streams) {
+                    const stream = streams[user];
+                    globalAccounts++; globalViewersPeak += stream.maxViewers; globalLikes += stream.likes; globalInteractions += (stream.chatCount + stream.giftCount);
+
+                    if (stream.status === 'live' && stream.startTime) {
+                        const diff = Math.floor((now - stream.startTime) / 1000);
+                        const h = String(Math.floor(diff / 3600)).padStart(2, '0');
+                        const m = String(Math.floor((diff % 3600) / 60)).padStart(2, '0');
+                        const s = String(diff % 60).padStart(2, '0');
+                        const durationEl = document.getElementById(`duration-${user}`);
+                        if (durationEl) durationEl.textContent = `${h}:${m}:${s}`;
+                    }
+                }
+                document.getElementById('global-accounts').textContent = formatNumber(globalAccounts);
+                document.getElementById('global-viewers-peak').textContent = formatNumber(globalViewersPeak);
+                document.getElementById('global-likes').textContent = formatNumber(globalLikes);
+                document.getElementById('global-interactions').textContent = formatNumber(globalInteractions);
+            }, 1000);
+
+        </script>
     </div>
-    <div class="modal fade deletedata" role="dialog" tabindex="-1" id="addAccountModal" aria-hidden="true" style="z-index:1060;">
+    <div class="modal fade deletedata" role="dialog" tabindex="-1" id="addAccountModal" aria-hidden="true"
+        style="z-index:1060;">
         <div class="modal-dialog modal-dialog-centered" role="document">
             <div class="modal-content glass-panel border-panel shadow-lg">
                 <div class="modal-header border-bottom-glass">
-                    <h5 class="modal-title fw-bold text-white"><i class="fas fa-user-plus me-2 icon-grad-users"></i>Tambah Akun Manual </h5><button class="btn-close btn-close-white" aria-label="Close" data-bs-dismiss="modal" type="button"></button>
+                    <h5 class="modal-title fw-bold text-white"><i
+                            class="fas fa-user-plus me-2 icon-grad-users"></i>Tambah Akun Manual </h5><button
+                        class="btn-close btn-close-white" aria-label="Close" data-bs-dismiss="modal"
+                        type="button"></button>
                 </div>
                 <div class="modal-body p-4">
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted-custom">Username TikTok <span class="text-danger">*</span></label>
-                        <div class="input-group shadow-sm"><span class="input-group-text"><i class="fas fa-at"></i></span><input class="form-control" type="text" id="usernameInput" placeholder="Contoh: celloszxz"></div>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted-custom">Username TikTok <span
+                                class="text-danger">*</span></label>
+                        <div class="input-group shadow-sm"><span class="input-group-text"><i
+                                    class="fas fa-at"></i></span><input class="form-control" type="text"
+                                id="usernameInput" placeholder="Contoh: celloszxz"></div>
                     </div>
-                    <div class="mb-3"><label class="form-label small fw-bold text-muted-custom">Kategori (Label 1)</label>
-                        <div class="input-group shadow-sm"><span class="input-group-text"><i class="fas fa-tag text-info"></i></span><input class="form-control" type="text" id="label1Input" placeholder="Contoh: Gaming / E-Sports"></div>
+                    <div class="mb-3"><label class="form-label small fw-bold text-muted-custom">Kategori (Label
+                            1)</label>
+                        <div class="input-group shadow-sm"><span class="input-group-text"><i
+                                    class="fas fa-tag text-info"></i></span><input class="form-control" type="text"
+                                id="label1Input" placeholder="Contoh: Gaming / E-Sports"></div>
                     </div>
-                    <div class="mb-4"><label class="form-label small fw-bold text-muted-custom">Rating / Info (Label 2)</label>
-                        <div class="input-group shadow-sm"><span class="input-group-text"><i class="fas fa-star text-warning"></i></span><input class="form-control" type="text" id="label2Input" placeholder="Contoh: ⭐⭐⭐⭐⭐"></div>
-                    </div><button class="btn text-uppercase fw-bold w-100 py-2 btn-gradient-primary" style="letter-spacing:1px;" onclick="addStream()"><i class="fas fa-satellite-dish me-2"></i> Mulai Pantau </button>
+                    <div class="mb-4"><label class="form-label small fw-bold text-muted-custom">Rating / Info (Label
+                            2)</label>
+                        <div class="input-group shadow-sm"><span class="input-group-text"><i
+                                    class="fas fa-star text-warning"></i></span><input class="form-control" type="text"
+                                id="label2Input" placeholder="Contoh: ⭐⭐⭐⭐⭐"></div>
+                    </div><button class="btn text-uppercase fw-bold w-100 py-2 btn-gradient-primary"
+                        style="letter-spacing:1px;" onclick="addStream()"><i class="fas fa-satellite-dish me-2"></i>
+                        Mulai Pantau </button>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade deletedata" role="dialog" tabindex="-1" id="developerModal" aria-hidden="true" style="z-index:1060;">
+    <div class="modal fade deletedata" role="dialog" tabindex="-1" id="developerModal" aria-hidden="true"
+        style="z-index:1060;">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content glass-panel border-panel shadow-lg text-center">
-                <div class="modal-header border-0 justify-content-end pb-0"><button class="btn-close btn-close-white" aria-label="Close" data-bs-dismiss="modal" type="button"></button></div>
-                <div class="modal-body pt-0 pb-4 px-4"><img class="rounded-circle shadow-lg mb-3" alt="bimboy.zxz" src="assets/img/Bima.png" style="width: 142px;height: 142px;border: 3px solid rgba(14, 165, 233, 0.5);object-fit: cover;" width="80" height="80">
+                <div class="modal-header border-0 justify-content-end pb-0"><button class="btn-close btn-close-white"
+                        aria-label="Close" data-bs-dismiss="modal" type="button"></button></div>
+                <div class="modal-body pt-0 pb-4 px-4"><img class="rounded-circle shadow-lg mb-3" alt="bimboy.zxz"
+                        src="assets/img/Bima.png"
+                        style="width: 142px;height: 142px;border: 3px solid rgba(14, 165, 233, 0.5);object-fit: cover;"
+                        width="80" height="80">
                     <h5 class="fw-bold text-white mb-1">Project Gabut.. wkwk</h5>
-                    <p class="small fw-bold text-info bg-info bg-opacity-10 border rounded-pill border-info mb-4 px-3 py-1 badge">Versi 19.0.1</p>
+                    <p
+                        class="small fw-bold text-info bg-info bg-opacity-10 border rounded-pill border-info mb-4 px-3 py-1 badge">
+                        Versi 19.0.1</p>
                     <div class="text-start border rounded-4 shadow-sm p-3 mb-3 glass-panel-darker border-panel">
-                        <div class="small mb-2 pb-2 text-muted-custom border-bottom-glass"><i class="fas fa-user-astronaut text-primary me-2"></i><span>Developer:</span><br><span class="fw-bold text-white ms-4">bimboy.zxz</span></div>
-                        <div class="small mb-2 pb-2 text-muted-custom border-bottom-glass"><i class="fas fa-shield-alt text-success me-2"></i><span>Sistem:</span><br><span class="text-light ms-4">Anti-Rate Limit &amp; Reconnect</span></div>
-                        <div class="small text-muted-custom"><i class="fas fa-database text-warning me-2"></i><span>Koneksi:</span><br><span class="text-light ms-4">WebSockets Real-time</span></div>
+                        <div class="small mb-2 pb-2 text-muted-custom border-bottom-glass"><i
+                                class="fas fa-user-astronaut text-primary me-2"></i><span>Developer:</span><br><span
+                                class="fw-bold text-white ms-4">bimboy.zxz</span></div>
+                        <div class="small mb-2 pb-2 text-muted-custom border-bottom-glass"><i
+                                class="fas fa-shield-alt text-success me-2"></i><span>Sistem:</span><br><span
+                                class="text-light ms-4">Anti-Rate Limit &amp; Reconnect</span></div>
+                        <div class="small text-muted-custom"><i
+                                class="fas fa-database text-warning me-2"></i><span>Koneksi:</span><br><span
+                                class="text-light ms-4">WebSockets Real-time</span></div>
                     </div>
-                    <p class="mt-4 mb-0 text-muted-custom" style="font-size:0.65rem;letter-spacing:0.5px;">Tidak Ada Hak Cipta © 2026. Ide Boleh Di Curi.</p>
+                    <p class="mt-4 mb-0 text-muted-custom" style="font-size:0.65rem;letter-spacing:0.5px;">Tidak Ada Hak
+                        Cipta © 2026. Ide Boleh Di Curi.</p>
                 </div>
             </div>
         </div>
     </div>
-    <div class="modal fade deletedata" role="dialog" tabindex="-1" id="pinModal" aria-hidden="true" style="z-index:1070;">
+    <div class="modal fade deletedata" role="dialog" tabindex="-1" id="pinModal" aria-hidden="true"
+        style="z-index:1070;">
         <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
             <div class="modal-content glass-panel border-panel shadow-lg">
                 <div class="modal-header border-bottom-glass">
-                    <h5 class="modal-title fw-bold text-warning"><i class="fas fa-lock me-2"></i>Kode Akses </h5><button class="btn-close btn-close-white" aria-label="Close" data-bs-dismiss="modal" type="button"></button>
+                    <h5 class="modal-title fw-bold text-warning"><i class="fas fa-lock me-2"></i>Kode Akses </h5><button
+                        class="btn-close btn-close-white" aria-label="Close" data-bs-dismiss="modal"
+                        type="button"></button>
                 </div>
                 <div class="modal-body text-center p-4">
-                    <p class="small mb-3 text-muted-custom">Masukkan PIN rahasia untuk melanjutkan aksi ini.</p><input class="text-center text-light bg-dark border-secondary mb-2 form-control" type="password" id="pinInput" placeholder="PIN..." style="letter-spacing:3px;font-size:1.2rem;border-radius:12px;" onkeypress="if(event.key === &#39;Enter&#39;) submitPin()">
-                    <div class="small fw-bold text-danger d-none mb-3" id="pinError"><i class="fas fa-exclamation-triangle"></i><span> Kode Akses Salah!</span></div>
-                    <div class="d-flex justify-content-center gap-2 mt-3"><button class="btn btn-secondary fw-bold w-50" data-bs-dismiss="modal" style="border-radius:12px;" type="button">Batal</button><button class="btn btn-success fw-bold w-50" style="border-radius:12px;" type="button" onclick="submitPin()"><i class="fas fa-unlock me-1"></i> Buka</button></div>
+                    <p class="small mb-3 text-muted-custom">Masukkan PIN rahasia untuk melanjutkan aksi ini.</p><input
+                        class="text-center text-light bg-dark border-secondary mb-2 form-control" type="password"
+                        id="pinInput" placeholder="PIN..."
+                        style="letter-spacing:3px;font-size:1.2rem;border-radius:12px;"
+                        onkeypress="if(event.key === &#39;Enter&#39;) submitPin()">
+                    <div class="small fw-bold text-danger d-none mb-3" id="pinError"><i
+                            class="fas fa-exclamation-triangle"></i><span> Kode Akses Salah!</span></div>
+                    <div class="d-flex justify-content-center gap-2 mt-3"><button class="btn btn-secondary fw-bold w-50"
+                            data-bs-dismiss="modal" style="border-radius:12px;" type="button">Batal</button><button
+                            class="btn btn-success fw-bold w-50" style="border-radius:12px;" type="button"
+                            onclick="submitPin()"><i class="fas fa-unlock me-1"></i> Buka</button></div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="border rounded shadow-lg p-3 floating-widget glass-panel border-panel deletedata" id="importProgressWidget">
-        <div class="d-flex justify-content-between align-items-center mb-2"><span class="small fw-bold text-info"><i class="fas fa-cloud-download-alt me-2"></i>Memproses Import...</span><span class="badge bg-primary rounded-pill" id="importCountText">0 / 0</span></div>
+    <div class="border rounded shadow-lg p-3 floating-widget glass-panel border-panel deletedata"
+        id="importProgressWidget">
+        <div class="d-flex justify-content-between align-items-center mb-2"><span class="small fw-bold text-info"><i
+                    class="fas fa-cloud-download-alt me-2"></i>Memproses Import...</span><span
+                class="badge bg-primary rounded-pill" id="importCountText">0 / 0</span></div>
         <div class="progress border glass-panel-darker border-panel" style="height:12px;border-radius:6px;">
-            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" id="importProgressBar" style="width:0%;border-radius:6px;"><span class="visually-hidden">50%</span></div>
+            <div class="progress-bar bg-info progress-bar-striped progress-bar-animated" aria-valuenow="50"
+                aria-valuemin="0" aria-valuemax="100" id="importProgressBar" style="width:0%;border-radius:6px;"><span
+                    class="visually-hidden">50%</span></div>
         </div>
-        <div class="fw-bold d-flex justify-content-between mt-2 text-muted-custom" style="font-size:0.7rem;"><span class="text-truncate text-white" id="importCurrentUsername" style="max-width:150px;">Menyiapkan...</span><span class="text-success"><i class="fas fa-shield-alt me-1"></i>Aman Anti-Blokir</span></div>
+        <div class="fw-bold d-flex justify-content-between mt-2 text-muted-custom" style="font-size:0.7rem;"><span
+                class="text-truncate text-white" id="importCurrentUsername"
+                style="max-width:150px;">Menyiapkan...</span><span class="text-success"><i
+                    class="fas fa-shield-alt me-1"></i>Aman Anti-Blokir</span></div>
     </div>
     <script src="assets/bootstrap/js/bootstrap.min.js"></script>
     <script src="assets/js/script.min.js"></script>
