@@ -14,5 +14,7 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs"
+  "type": "commonjs""scripts": {
+    "start": "node server.js"
+  }
 }
