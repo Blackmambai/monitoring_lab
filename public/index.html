@@ -147,7 +147,7 @@
 </head>
 <body class="d-flex vh-100 text-light">
 
-    <!-- SIDEBAR -->
+    <!-- SIDEBAR (Z-Index: 1040) -->
     <div class="offcanvas-md offcanvas-start glass-panel border-end border-panel d-flex flex-column" tabindex="-1" id="sidebarMenu" style="width: 260px; border-radius: 0 16px 16px 0 !important; z-index: 1040;">
         <div class="offcanvas-header border-bottom border-panel bg-transparent flex-column align-items-start pb-3">
             <div class="d-flex align-items-center w-100 justify-content-between mb-2">
@@ -197,10 +197,16 @@
                         <i class="fas fa-file-excel fa-fw me-2"></i> Import Akun
                     </a>
                 </li>
-                <!-- Tombol Hapus Global (Butuh PIN) -->
+                <!-- Tombol Bersihkan Aktivitas Global (Butuh PIN) -->
                 <li class="nav-item mt-3">
-                    <a href="#" onclick="clearAllActivities()" class="nav-link text-danger nav-item-custom py-2" style="background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3);">
-                        <i class="fas fa-trash-alt fa-fw me-2"></i> Hapus Semua Data
+                    <a href="#" onclick="clearAllActivities()" class="nav-link text-warning nav-item-custom py-2" style="background: rgba(245, 158, 11, 0.15); border: 1px solid rgba(245, 158, 11, 0.3);">
+                        <i class="fas fa-broom fa-fw me-2"></i> Bersihkan Log Global
+                    </a>
+                </li>
+                <!-- Tombol Hapus Semua Akun (Butuh PIN) -->
+                <li class="nav-item mt-2">
+                    <a href="#" onclick="removeAllStreams()" class="nav-link text-danger nav-item-custom py-2" style="background: rgba(220,53,69,0.15); border: 1px solid rgba(220,53,69,0.3);">
+                        <i class="fas fa-user-times fa-fw me-2"></i> Hapus Semua Akun
                     </a>
                 </li>
             </ul>
@@ -227,7 +233,7 @@
     <!-- AREA KONTEN UTAMA -->
     <div class="d-flex flex-column flex-grow-1 overflow-hidden w-100">
         
-        <!-- TOP HEADER -->
+        <!-- TOP HEADER (Z-Index: 1030) -->
         <header class="glass-panel border-bottom border-panel p-3 d-flex align-items-center justify-content-between shrink-0" style="border-radius: 0 0 16px 16px !important; margin: 0 10px; position: relative; z-index: 1030;">
             <div class="d-flex align-items-center gap-3 flex-grow-1">
                 <button class="btn btn-outline-secondary d-md-none border-panel text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
@@ -250,7 +256,7 @@
                     <i class="fas fa-file-import"></i><span class="d-none d-lg-inline fw-bold">Import</span>
                 </button>
                 
-                <!-- Dropdown Export Header (Bebas PIN) -->
+                <!-- Dropdown Export Header (Bebas PIN, Z-Index 1050 di setting CSS) -->
                 <div class="dropdown">
                     <button class="btn btn-gradient-success d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Export Excel">
                         <i class="fas fa-file-excel"></i><span class="d-none d-lg-inline fw-bold">Export</span>
@@ -265,7 +271,7 @@
             </div>
         </header>
 
-        <!-- MAIN SCROLLABLE CONTENT -->
+        <!-- MAIN SCROLLABLE CONTENT (Z-Index: 1) -->
         <main class="flex-grow-1 overflow-y-auto p-3 p-md-4" style="z-index: 1;">
             
             <div class="row g-3 mb-4">
@@ -340,7 +346,7 @@
         </main>
     </div>
 
-    <!-- MODAL TAMBAH AKUN MANUAL -->
+    <!-- MODAL TAMBAH AKUN MANUAL (Z-Index: 1060) -->
     <div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true" style="z-index: 1060;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content glass-panel border-panel shadow-lg">
@@ -372,7 +378,7 @@
                             <input type="text" id="label2Input" class="form-control" placeholder="Contoh: ⭐⭐⭐⭐⭐">
                         </div>
                     </div>
-                    <!-- Submit Butuh PIN -->
+                    <!-- Submit Butuh PIN (Pemicu PIN Modal) -->
                     <button onclick="addStream()" class="btn btn-gradient-primary w-100 py-2 fw-bold text-uppercase" style="letter-spacing: 1px;">
                         <i class="fas fa-satellite-dish me-2"></i> Mulai Pantau
                     </button>
@@ -381,7 +387,7 @@
         </div>
     </div>
 
-    <!-- MODAL INFORMASI PENGEMBANG -->
+    <!-- MODAL INFORMASI PENGEMBANG (Z-Index: 1060) -->
     <div class="modal fade" id="developerModal" tabindex="-1" aria-hidden="true" style="z-index: 1060;">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-panel border-panel shadow-lg text-center">
@@ -412,7 +418,7 @@
         </div>
     </div>
 
-    <!-- MODAL PIN AKSES (Z-Index paling tinggi agar tidak tertimpa) -->
+    <!-- MODAL PIN AKSES (Z-Index paling tinggi: 1070) -->
     <div class="modal fade" id="pinModal" tabindex="-1" aria-hidden="true" style="z-index: 1070;">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-panel border-panel shadow-lg">
@@ -453,6 +459,7 @@
         </div>
     </div>
 
+    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -506,7 +513,7 @@
                 const modalInstance = bootstrap.Modal.getInstance(pinModalEl);
                 if (modalInstance) modalInstance.hide();
                 
-                // Eksekusi aksi yang tertunda
+                // Eksekusi aksi utama setelah PIN Benar
                 if (pendingPinCallback) {
                     pendingPinCallback();
                     pendingPinCallback = null;
@@ -517,7 +524,6 @@
                 document.getElementById('pinInput').focus();
             }
         }
-
         // ==========================
 
         function setStatusFilter(status) {
@@ -672,9 +678,23 @@
                     title: 'Bersihkan SEMUA Aktivitas?', 
                     text: 'Data chat dan gift untuk SELURUH AKUN akan dihapus dari server dan kembali ke 0. Aksi ini tidak dapat dibatalkan!', 
                     icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: '<i class="fas fa-trash-alt me-1"></i>Ya, Hapus Semua!', cancelButtonText: 'Batal'
+                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
                 }).then((result) => { 
                     if (result.isConfirmed) socket.emit('clearAllActivities'); 
+                });
+            });
+        }
+
+        // === FUNGSI BARU: HAPUS SEMUA AKUN GLOBAL ===
+        function removeAllStreams() {
+            requirePin(() => {
+                Swalert.fire({
+                    title: 'Hapus SEMUA Akun?', 
+                    text: 'Semua akun yang dipantau akan dihapus secara permanen dari dashboard. Aksi ini tidak dapat dibatalkan!', 
+                    icon: 'warning',
+                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: '<i class="fas fa-user-times me-1"></i>Ya, Hapus Semua!', cancelButtonText: 'Batal'
+                }).then((result) => { 
+                    if (result.isConfirmed) socket.emit('removeAllStreams'); 
                 });
             });
         }
@@ -699,6 +719,7 @@
             }
         }
 
+        // FUNGSI EXPORT TANPA PIN
         function exportGlobalExcel(tipeLaporan = 'Semua Data') {
             Swalert.fire({ title: `Menyiapkan Laporan ${tipeLaporan}...`, text: 'Merekap seluruh data dan riwayat interaksi.', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
             setTimeout(() => {
@@ -733,6 +754,7 @@
             }, 500); 
         }
 
+        // EXPORT TANPA PIN
         function exportData(username) {
             const stream = streams[username]; if (!stream) return;
             const duration = document.getElementById(`duration-${username}`).textContent;
@@ -795,6 +817,20 @@
                 if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
             }
             Toast.fire({ icon: 'success', title: `Seluruh aktivitas berhasil dibersihkan!` });
+        });
+
+        // MENGHAPUS SEMUA AKUN DARI UI
+        socket.on('allStreamsRemoved', () => {
+            for (let username in streams) {
+                const col = document.getElementById(`col-${username}`);
+                if (col) { 
+                    col.style.opacity = "0"; 
+                    setTimeout(() => col.remove(), 300); 
+                }
+                delete streams[username];
+            }
+            updateCategoryDropdown();
+            Toast.fire({ icon: 'success', title: `Seluruh akun berhasil dihapus dari pantauan!` });
         });
 
         socket.on('streamStatusChanged', (data) => {

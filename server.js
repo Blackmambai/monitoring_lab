@@ -87,17 +87,6 @@ io.on('connection', (socket) => {
         }
     });
 
-    // FITUR BARU: BERSIHKAN SEMUA AKTIVITAS GLOBAL
-    socket.on('clearAllActivities', () => {
-        Object.keys(monitoredAccounts).forEach(user => {
-            monitoredAccounts[user].logs = [];
-            monitoredAccounts[user].chatCount = 0;
-            monitoredAccounts[user].giftCount = 0;
-        });
-        // Beritahu semua client untuk reset UI
-        io.emit('allActivitiesCleared');
-    });
-
     // FITUR BARU: BERSIHKAN AKTIVITAS (Kembali ke 0)
     socket.on('clearActivity', (username) => {
         if (monitoredAccounts[username]) {
@@ -108,6 +97,30 @@ io.on('connection', (socket) => {
             // Beritahu semua client agar menghapus data di layarnya
             io.emit('activityCleared', username);
         }
+    });
+
+    // FITUR BARU: BERSIHKAN SEMUA AKTIVITAS GLOBAL
+    socket.on('clearAllActivities', () => {
+        Object.keys(monitoredAccounts).forEach(user => {
+            monitoredAccounts[user].logs = [];
+            monitoredAccounts[user].chatCount = 0;
+            monitoredAccounts[user].giftCount = 0;
+        });
+        io.emit('allActivitiesCleared');
+    });
+
+    // FITUR BARU: HAPUS SEMUA AKUN (GLOBAL)
+    socket.on('removeAllStreams', () => {
+        Object.keys(monitoredAccounts).forEach(user => {
+            if (monitoredAccounts[user].connection) {
+                try { 
+                    monitoredAccounts[user].connection.removeAllListeners();
+                    monitoredAccounts[user].connection.disconnect(); 
+                } catch (e) {}
+            }
+            delete monitoredAccounts[user];
+        });
+        io.emit('allStreamsRemoved');
     });
 });
 
