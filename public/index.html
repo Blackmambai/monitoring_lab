@@ -125,29 +125,17 @@
         .dropdown-item:hover { background: rgba(255,255,255,0.1); color: #fff; }
 
         /* SweetAlert2 Responsive CSS Enhancements */
-        .swal2-popup {
-            max-width: 90vw !important; 
-            padding: 1.5em !important;
-        }
-        .swal2-title {
-            font-size: 1.4rem !important;
-        }
-        .swal2-html-container {
-            font-size: 0.95rem !important;
-        }
-        .swal2-actions {
-            gap: 10px;
-        }
-        .swal2-confirm, .swal2-cancel {
-            border-radius: 12px !important;
-            font-weight: bold !important;
-            padding: 0.6em 1.5em !important;
-        }
+        .swal2-container { z-index: 9999 !important; }
+        .swal2-popup { max-width: 90vw !important; padding: 1.5em !important; }
+        .swal2-title { font-size: 1.4rem !important; }
+        .swal2-html-container { font-size: 0.95rem !important; }
+        .swal2-actions { gap: 10px; }
+        .swal2-confirm, .swal2-cancel { border-radius: 12px !important; font-weight: bold !important; padding: 0.6em 1.5em !important; }
     </style>
 </head>
 <body class="d-flex vh-100 text-light">
 
-    <!-- SIDEBAR (Z-Index: 1040) -->
+    <!-- SIDEBAR -->
     <div class="offcanvas-md offcanvas-start glass-panel border-end border-panel d-flex flex-column" tabindex="-1" id="sidebarMenu" style="width: 260px; border-radius: 0 16px 16px 0 !important; z-index: 1040;">
         <div class="offcanvas-header border-bottom border-panel bg-transparent flex-column align-items-start pb-3">
             <div class="d-flex align-items-center w-100 justify-content-between mb-2">
@@ -179,15 +167,9 @@
                     </a>
                     <div class="collapse" id="exportSubMenu">
                         <ul class="nav flex-column ms-3 mb-2" style="border-left: 2px solid rgba(255,255,255,0.1);">
-                            <li class="nav-item">
-                                <a href="#" onclick="exportGlobalExcel('Harian')" class="nav-link text-muted-custom py-2 hover-dev"><i class="fas fa-circle me-2" style="font-size: 0.4rem;"></i>Laporan Harian</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" onclick="exportGlobalExcel('Mingguan')" class="nav-link text-muted-custom py-2 hover-dev"><i class="fas fa-circle me-2" style="font-size: 0.4rem;"></i>Laporan Mingguan</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" onclick="exportGlobalExcel('Semua Data')" class="nav-link text-muted-custom py-2 hover-dev"><i class="fas fa-circle me-2" style="font-size: 0.4rem;"></i>Semua Data</a>
-                            </li>
+                            <li class="nav-item"><a href="#" onclick="exportGlobalExcel('Harian')" class="nav-link text-muted-custom py-2 hover-dev"><i class="fas fa-circle me-2" style="font-size: 0.4rem;"></i>Laporan Harian</a></li>
+                            <li class="nav-item"><a href="#" onclick="exportGlobalExcel('Mingguan')" class="nav-link text-muted-custom py-2 hover-dev"><i class="fas fa-circle me-2" style="font-size: 0.4rem;"></i>Laporan Mingguan</a></li>
+                            <li class="nav-item"><a href="#" onclick="exportGlobalExcel('Semua Data')" class="nav-link text-muted-custom py-2 hover-dev"><i class="fas fa-circle me-2" style="font-size: 0.4rem;"></i>Semua Data</a></li>
                         </ul>
                     </div>
                 </li>
@@ -233,7 +215,7 @@
     <!-- AREA KONTEN UTAMA -->
     <div class="d-flex flex-column flex-grow-1 overflow-hidden w-100">
         
-        <!-- TOP HEADER (Z-Index: 1030) -->
+        <!-- TOP HEADER -->
         <header class="glass-panel border-bottom border-panel p-3 d-flex align-items-center justify-content-between shrink-0" style="border-radius: 0 0 16px 16px !important; margin: 0 10px; position: relative; z-index: 1030;">
             <div class="d-flex align-items-center gap-3 flex-grow-1">
                 <button class="btn btn-outline-secondary d-md-none border-panel text-white" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarMenu">
@@ -245,18 +227,18 @@
                 </div>
             </div>
             <div class="d-flex gap-2 ms-2">
-                <!-- Tombol Tambah Akun Buka Modal Saja -->
+                <!-- Tombol Tambah Akun Buka Modal -->
                 <button class="btn btn-gradient-primary d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addAccountModal">
                     <i class="fas fa-user-plus"></i><span class="d-none d-sm-inline fw-bold">Tambah Akun</span>
                 </button>
                 
                 <input type="file" id="fileInput" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" class="d-none" onchange="handleFileUpload(event)">
-                <!-- Tombol Import Header (Butuh PIN) -->
+                <!-- Tombol Import Header -->
                 <button onclick="requirePin(() => document.getElementById('fileInput').click())" class="btn btn-gradient-info d-flex align-items-center gap-2" title="Import Excel">
                     <i class="fas fa-file-import"></i><span class="d-none d-lg-inline fw-bold">Import</span>
                 </button>
                 
-                <!-- Dropdown Export Header (Bebas PIN, Z-Index 1050 di setting CSS) -->
+                <!-- Dropdown Export Header -->
                 <div class="dropdown">
                     <button class="btn btn-gradient-success d-flex align-items-center gap-2 dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" title="Export Excel">
                         <i class="fas fa-file-excel"></i><span class="d-none d-lg-inline fw-bold">Export</span>
@@ -271,7 +253,7 @@
             </div>
         </header>
 
-        <!-- MAIN SCROLLABLE CONTENT (Z-Index: 1) -->
+        <!-- MAIN SCROLLABLE CONTENT -->
         <main class="flex-grow-1 overflow-y-auto p-3 p-md-4" style="z-index: 1;">
             
             <div class="row g-3 mb-4">
@@ -346,7 +328,7 @@
         </main>
     </div>
 
-    <!-- MODAL TAMBAH AKUN MANUAL (Z-Index: 1060) -->
+    <!-- MODAL TAMBAH AKUN MANUAL -->
     <div class="modal fade" id="addAccountModal" tabindex="-1" aria-hidden="true" style="z-index: 1060;">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content glass-panel border-panel shadow-lg">
@@ -387,7 +369,7 @@
         </div>
     </div>
 
-    <!-- MODAL INFORMASI PENGEMBANG (Z-Index: 1060) -->
+    <!-- MODAL INFORMASI PENGEMBANG -->
     <div class="modal fade" id="developerModal" tabindex="-1" aria-hidden="true" style="z-index: 1060;">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-panel border-panel shadow-lg text-center">
@@ -418,7 +400,7 @@
         </div>
     </div>
 
-    <!-- MODAL PIN AKSES (Z-Index paling tinggi: 1070) -->
+    <!-- MODAL PIN AKSES -->
     <div class="modal fade" id="pinModal" tabindex="-1" aria-hidden="true" style="z-index: 1070;">
         <div class="modal-dialog modal-dialog-centered modal-sm">
             <div class="modal-content glass-panel border-panel shadow-lg">
@@ -459,7 +441,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
@@ -478,54 +459,38 @@
         const streams = {};
         let currentStatusFilter = 'all'; 
 
-        // === FUNGSI KEAMANAN PIN DENGAN MODAL BOOTSTRAP ===
+        // === FUNGSI KEAMANAN PIN ===
         const ACCESS_PIN = "_123bimagantengbanget";
         let pendingPinCallback = null;
 
         function requirePin(callback) {
             pendingPinCallback = callback;
-            
-            // Reset form modal PIN
             const pinInput = document.getElementById('pinInput');
             pinInput.value = '';
             document.getElementById('pinError').classList.add('d-none');
             
-            // Panggil Modal PIN
             const pinModalEl = document.getElementById('pinModal');
             const pinModal = bootstrap.Modal.getInstance(pinModalEl) || new bootstrap.Modal(pinModalEl);
             pinModal.show();
 
-            // Auto fokus ke input saat modal terbuka
-            pinModalEl.addEventListener('shown.bs.modal', () => {
-                pinInput.focus();
-            }, { once: true });
+            pinModalEl.addEventListener('shown.bs.modal', () => { pinInput.focus(); }, { once: true });
         }
 
         function submitPin() {
             const pinValue = document.getElementById('pinInput').value;
-            
             if (pinValue === ACCESS_PIN) {
-                // PIN Benar
                 document.getElementById('pinError').classList.add('d-none');
-                
-                // Tutup Modal PIN
                 const pinModalEl = document.getElementById('pinModal');
                 const modalInstance = bootstrap.Modal.getInstance(pinModalEl);
                 if (modalInstance) modalInstance.hide();
-                
-                // Eksekusi aksi utama setelah PIN Benar
-                if (pendingPinCallback) {
-                    pendingPinCallback();
-                    pendingPinCallback = null;
-                }
+                if (pendingPinCallback) { pendingPinCallback(); pendingPinCallback = null; }
             } else {
-                // PIN Salah
                 document.getElementById('pinError').classList.remove('d-none');
                 document.getElementById('pinInput').focus();
             }
         }
-        // ==========================
 
+        // === FUNGSI UTILITAS ===
         function setStatusFilter(status) {
             currentStatusFilter = status;
             document.getElementById('tab-status-all').classList.remove('active');
@@ -549,63 +514,6 @@
             if (categories.has(currentSelected)) { select.value = currentSelected; }
         }
 
-        function handleFileUpload(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                const data = new Uint8Array(e.target.result);
-                const workbook = XLSX.read(data, { type: 'array' });
-                const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
-                const accountsToImport = [];
-                rows.forEach(row => {
-                    if (row.length > 0 && typeof row[0] === 'string') {
-                        let username = row[0].trim().replace(/[@\s]/g, '');
-                        if (username && username.length > 2) {
-                            accountsToImport.push({ 
-                                username: username, 
-                                label1: (row.length > 1 && row[1]) ? String(row[1]).trim() : 'Tanpa Label 1', 
-                                label2: (row.length > 2 && row[2]) ? String(row[2]).trim() : 'Tanpa Label 2' 
-                            });
-                        }
-                    }
-                });
-                if (accountsToImport.length > 0) {
-                    Swalert.fire({
-                        title: 'Mulai Import?', text: `Akan memuat ${accountsToImport.length} akun secara bertahap dan aman dari blokir.`,
-                        icon: 'info', showCancelButton: true, confirmButtonText: '<i class="fas fa-play me-1"></i> Mulai', cancelButtonText: 'Batal'
-                    }).then((result) => {
-                        if (result.isConfirmed) socket.emit('addBulkStreams', accountsToImport);
-                    });
-                } else { Swalert.fire('Data Kosong', 'Tidak ada username yang valid di Kolom A pada file tersebut.', 'error'); }
-            };
-            reader.readAsArrayBuffer(file);
-            event.target.value = '';
-        }
-
-        socket.on('importProgress', (data) => {
-            const widget = document.getElementById('importProgressWidget');
-            const bar = document.getElementById('importProgressBar');
-            widget.classList.add('show');
-            const percentage = (data.current / data.total) * 100;
-            bar.style.width = `${percentage}%`;
-            document.getElementById('importCountText').innerText = `${data.current} / ${data.total}`;
-            document.getElementById('importCurrentUsername').innerHTML = `Membuka: <span class="text-white fw-bold">@${data.username}</span>`;
-        });
-
-        socket.on('importComplete', () => {
-            const widget = document.getElementById('importProgressWidget');
-            setTimeout(() => {
-                widget.classList.remove('show');
-                setTimeout(() => { document.getElementById('importProgressBar').style.width = '0%'; }, 500);
-            }, 3000);
-        });
-
-        socket.on('serverStats', (data) => {
-            const memEl = document.getElementById('server-memory-usage');
-            if (memEl && data.memory) { memEl.innerHTML = `<i class="fas fa-memory me-1"></i> ${data.memory} MB`; }
-        });
-
         function filterStreams() {
             const query = document.getElementById('searchInput').value.toLowerCase();
             const selectedCategory = document.getElementById('categoryFilter').value;
@@ -623,80 +531,6 @@
                     else colWrapper.style.display = 'none';
                 }
             }
-        }
-
-        function addStream() {
-            requirePin(() => {
-                const username = document.getElementById('usernameInput').value.trim().toLowerCase();
-                const label1 = document.getElementById('label1Input').value.trim() || 'Tanpa Label 1';
-                const label2 = document.getElementById('label2Input').value.trim() || 'Tanpa Label 2';
-
-                if (!username) return Swalert.fire('Input Kosong', 'Harap masukkan username TikTok terlebih dahulu.', 'warning');
-                if (streams[username]) return Swalert.fire('Sudah Ada', 'Akun ini sudah ada di dashboard!', 'info');
-                
-                socket.emit('addStream', { username, label1, label2 });
-                
-                document.getElementById('usernameInput').value = ''; 
-                document.getElementById('label1Input').value = ''; 
-                document.getElementById('label2Input').value = '';
-                document.getElementById('searchInput').value = ''; 
-                document.getElementById('categoryFilter').value = ''; 
-                
-                const modalEl = document.getElementById('addAccountModal');
-                let modalInstance = bootstrap.Modal.getInstance(modalEl);
-                if(modalInstance) modalInstance.hide();
-
-                setStatusFilter('all'); filterStreams();
-            });
-        }
-
-        function removeStream(username) {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Hapus Pantauan?', text: `Yakin ingin menghapus @${username}?`, icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Ya, Hapus!', cancelButtonText: 'Batal'
-                }).then((result) => { if (result.isConfirmed) socket.emit('removeStream', username); });
-            });
-        }
-
-        function clearActivity(username) {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Bersihkan Aktivitas?', 
-                    text: `Data chat dan gift untuk @${username} akan dihapus dari server dan kembali ke 0.`, 
-                    icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
-                }).then((result) => { 
-                    if (result.isConfirmed) socket.emit('clearActivity', username); 
-                });
-            });
-        }
-
-        function clearAllActivities() {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Bersihkan SEMUA Aktivitas?', 
-                    text: 'Data chat dan gift untuk SELURUH AKUN akan dihapus dari server dan kembali ke 0. Aksi ini tidak dapat dibatalkan!', 
-                    icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
-                }).then((result) => { 
-                    if (result.isConfirmed) socket.emit('clearAllActivities'); 
-                });
-            });
-        }
-
-        // === FUNGSI BARU: HAPUS SEMUA AKUN GLOBAL ===
-        function removeAllStreams() {
-            requirePin(() => {
-                Swalert.fire({
-                    title: 'Hapus SEMUA Akun?', 
-                    text: 'Semua akun yang dipantau akan dihapus secara permanen dari dashboard. Aksi ini tidak dapat dibatalkan!', 
-                    icon: 'warning',
-                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: '<i class="fas fa-user-times me-1"></i>Ya, Hapus Semua!', cancelButtonText: 'Batal'
-                }).then((result) => { 
-                    if (result.isConfirmed) socket.emit('removeAllStreams'); 
-                });
-            });
         }
 
         function switchTab(username, tab) {
@@ -719,7 +553,100 @@
             }
         }
 
-        // FUNGSI EXPORT TANPA PIN
+        function formatNumber(num) {
+            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
+            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+            return num;
+        }
+
+        function getTodayDate() { return new Date().toISOString().split('T')[0]; }
+
+        // === FUNGSI AKSI UTAMA (Dengan PIN Guard) ===
+        function handleFileUpload(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const data = new Uint8Array(e.target.result);
+                const workbook = XLSX.read(data, { type: 'array' });
+                const rows = XLSX.utils.sheet_to_json(workbook.Sheets[workbook.SheetNames[0]], { header: 1 });
+                const accountsToImport = [];
+                rows.forEach(row => {
+                    if (row.length > 0 && typeof row[0] === 'string') {
+                        let username = row[0].trim().replace(/[@\s]/g, '');
+                        if (username && username.length > 2) {
+                            accountsToImport.push({ username: username, label1: (row.length > 1 && row[1]) ? String(row[1]).trim() : 'Tanpa Label 1', label2: (row.length > 2 && row[2]) ? String(row[2]).trim() : 'Tanpa Label 2' });
+                        }
+                    }
+                });
+                if (accountsToImport.length > 0) {
+                    Swalert.fire({
+                        title: 'Mulai Import?', text: `Akan memuat ${accountsToImport.length} akun secara bertahap.`, icon: 'info', showCancelButton: true, confirmButtonText: '<i class="fas fa-play me-1"></i> Mulai', cancelButtonText: 'Batal'
+                    }).then((result) => { if (result.isConfirmed) socket.emit('addBulkStreams', accountsToImport); });
+                } else { Swalert.fire('Data Kosong', 'Tidak ada username valid di Kolom A.', 'error'); }
+            };
+            reader.readAsArrayBuffer(file);
+            event.target.value = '';
+        }
+
+        function addStream() {
+            requirePin(() => {
+                const username = document.getElementById('usernameInput').value.trim().toLowerCase();
+                const label1 = document.getElementById('label1Input').value.trim() || 'Tanpa Label 1';
+                const label2 = document.getElementById('label2Input').value.trim() || 'Tanpa Label 2';
+
+                if (!username) return Swalert.fire('Input Kosong', 'Harap masukkan username TikTok.', 'warning');
+                if (streams[username]) return Swalert.fire('Sudah Ada', 'Akun ini sudah ada di dashboard!', 'info');
+                
+                socket.emit('addStream', { username, label1, label2 });
+                
+                document.getElementById('usernameInput').value = ''; document.getElementById('label1Input').value = ''; document.getElementById('label2Input').value = '';
+                document.getElementById('searchInput').value = ''; document.getElementById('categoryFilter').value = ''; 
+                
+                const modalEl = document.getElementById('addAccountModal');
+                let modalInstance = bootstrap.Modal.getInstance(modalEl);
+                if(modalInstance) modalInstance.hide();
+                setStatusFilter('all'); filterStreams();
+            });
+        }
+
+        function removeStream(username) {
+            requirePin(() => {
+                Swalert.fire({
+                    title: 'Hapus Pantauan?', text: `Yakin ingin menghapus @${username}?`, icon: 'warning',
+                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: 'Ya, Hapus!', cancelButtonText: 'Batal'
+                }).then((result) => { if (result.isConfirmed) socket.emit('removeStream', username); });
+            });
+        }
+
+        function clearActivity(username) {
+            requirePin(() => {
+                Swalert.fire({
+                    title: 'Bersihkan Aktivitas?', text: `Data chat dan gift untuk @${username} akan kembali ke 0.`, icon: 'warning',
+                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
+                }).then((result) => { if (result.isConfirmed) socket.emit('clearActivity', username); });
+            });
+        }
+
+        function clearAllActivities() {
+            requirePin(() => {
+                Swalert.fire({
+                    title: 'Bersihkan SEMUA Aktivitas?', text: 'Data chat dan gift untuk SELURUH AKUN akan kembali ke 0!', icon: 'warning',
+                    showCancelButton: true, confirmButtonColor: '#f59e0b', confirmButtonText: '<i class="fas fa-broom me-1"></i>Ya, Bersihkan!', cancelButtonText: 'Batal'
+                }).then((result) => { if (result.isConfirmed) socket.emit('clearAllActivities'); });
+            });
+        }
+
+        function removeAllStreams() {
+            requirePin(() => {
+                Swalert.fire({
+                    title: 'Hapus SEMUA Akun?', text: 'Semua akun akan dihapus permanen dari dashboard!', icon: 'warning',
+                    showCancelButton: true, confirmButtonColor: '#dc3545', confirmButtonText: '<i class="fas fa-user-times me-1"></i>Ya, Hapus Semua!', cancelButtonText: 'Batal'
+                }).then((result) => { if (result.isConfirmed) socket.emit('removeAllStreams'); });
+            });
+        }
+
+        // === FUNGSI EXPORT (Bebas PIN) ===
         function exportGlobalExcel(tipeLaporan = 'Semua Data') {
             Swalert.fire({ title: `Menyiapkan Laporan ${tipeLaporan}...`, text: 'Merekap seluruh data dan riwayat interaksi.', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); }});
             setTimeout(() => {
@@ -754,7 +681,6 @@
             }, 500); 
         }
 
-        // EXPORT TANPA PIN
         function exportData(username) {
             const stream = streams[username]; if (!stream) return;
             const duration = document.getElementById(`duration-${username}`).textContent;
@@ -764,141 +690,7 @@
             const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = `Laporan_${username}_${getTodayDate()}.csv`; a.click(); URL.revokeObjectURL(url);
         }
 
-        function getTodayDate() { return new Date().toISOString().split('T')[0]; }
-
-        socket.on('initStreams', (activeStreams) => {
-            activeStreams.forEach(data => createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount)); updateCategoryDropdown();
-        });
-        
-        socket.on('streamAdded', (data) => {
-            createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount); updateCategoryDropdown();
-        });
-        
-        socket.on('streamRemoved', (data) => {
-            const col = document.getElementById(`col-${data.username}`);
-            if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
-            delete streams[data.username]; updateCategoryDropdown();
-        });
-        
-        socket.on('activityCleared', (username) => {
-            if (streams[username]) {
-                streams[username].logs = [];
-                streams[username].chatCount = 0;
-                streams[username].giftCount = 0;
-                
-                const chatCountEl = document.getElementById(`count-chat-${username}`);
-                const giftCountEl = document.getElementById(`count-gift-${username}`);
-                if(chatCountEl) chatCountEl.textContent = "0";
-                if(giftCountEl) giftCountEl.textContent = "0";
-
-                const tabChat = document.getElementById(`tab-chat-${username}`);
-                const tabGift = document.getElementById(`tab-gift-${username}`);
-                if(tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
-                if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
-                
-                Toast.fire({ icon: 'success', title: `Aktivitas @${username} berhasil dibersihkan!` });
-            }
-        });
-
-        socket.on('allActivitiesCleared', () => {
-            for (let username in streams) {
-                streams[username].logs = [];
-                streams[username].chatCount = 0;
-                streams[username].giftCount = 0;
-                
-                const chatCountEl = document.getElementById(`count-chat-${username}`);
-                const giftCountEl = document.getElementById(`count-gift-${username}`);
-                if(chatCountEl) chatCountEl.textContent = "0";
-                if(giftCountEl) giftCountEl.textContent = "0";
-
-                const tabChat = document.getElementById(`tab-chat-${username}`);
-                const tabGift = document.getElementById(`tab-gift-${username}`);
-                if(tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
-                if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
-            }
-            Toast.fire({ icon: 'success', title: `Seluruh aktivitas berhasil dibersihkan!` });
-        });
-
-        // MENGHAPUS SEMUA AKUN DARI UI
-        socket.on('allStreamsRemoved', () => {
-            for (let username in streams) {
-                const col = document.getElementById(`col-${username}`);
-                if (col) { 
-                    col.style.opacity = "0"; 
-                    setTimeout(() => col.remove(), 300); 
-                }
-                delete streams[username];
-            }
-            updateCategoryDropdown();
-            Toast.fire({ icon: 'success', title: `Seluruh akun berhasil dihapus dari pantauan!` });
-        });
-
-        socket.on('streamStatusChanged', (data) => {
-            if (!streams[data.username]) return;
-            streams[data.username].status = data.status;
-            if (data.info && data.info.startTime) streams[data.username].startTime = data.info.startTime; 
-
-            const badge = document.getElementById(`status-${data.username}`);
-            const card = document.getElementById(`card-${data.username}`);
-            if (!badge || !card) return;
-
-            badge.className = 'badge rounded-pill fw-normal shadow-sm d-inline-flex align-items-center gap-1';
-            if (data.status === 'live') {
-                badge.classList.add('bg-success'); badge.innerHTML = '<i class="fas fa-circle" style="font-size:7px"></i> ONLINE'; card.classList.remove('card-offline');
-            } else if (data.status === 'offline') {
-                badge.classList.add('bg-danger'); badge.innerHTML = '<i class="fas fa-power-off" style="font-size:9px"></i> OFFLINE'; card.classList.add('card-offline'); document.getElementById(`viewers-last-${data.username}`).textContent = "0"; 
-            } else if (data.status === 'checking') {
-                badge.classList.add('bg-warning', 'text-dark'); badge.innerHTML = '<i class="fas fa-sync fa-spin" style="font-size:9px"></i> CEK...';
-            }
-            filterStreams();
-        });
-        
-        socket.on('streamUpdate', (data) => {
-            if (!streams[data.username]) return;
-            if (data.viewers !== undefined) {
-                streams[data.username].lastViewers = data.viewers;
-                streams[data.username].maxViewers = Math.max(streams[data.username].maxViewers, data.viewers);
-                const elLast = document.getElementById(`viewers-last-${data.username}`); const elPeak = document.getElementById(`viewers-peak-${data.username}`);
-                if (elLast) elLast.textContent = formatNumber(data.viewers); if (elPeak) elPeak.textContent = formatNumber(streams[data.username].maxViewers);
-            }
-            if (data.likes !== undefined) {
-                streams[data.username].likes = data.likes; const el = document.getElementById(`likes-${data.username}`); if (el) el.textContent = formatNumber(data.likes);
-            }
-        });
-
-        socket.on('streamChat', (data) => {
-            if (!streams[data.username]) return;
-            streams[data.username].chatCount = data.chatCount; 
-            streams[data.username].logs.push(data.log);
-            document.getElementById(`count-chat-${data.username}`).textContent = formatNumber(data.chatCount);
-            
-            const box = document.getElementById(`tab-chat-${data.username}`); if (!box) return;
-            if (box.innerHTML.includes('Menunggu Chat')) box.innerHTML = ''; 
-
-            const div = document.createElement('div'); div.className = 'chat-line';
-            div.innerHTML = `<span class="fw-bold" style="color: #0ea5e9;">@${data.log.user}</span>: <span class="text-light">${data.log.detail}</span>`;
-            box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
-        });
-        
-        socket.on('streamGift', (data) => {
-            if (!streams[data.username]) return;
-            streams[data.username].giftCount = data.giftCount; 
-            streams[data.username].logs.push(data.log);
-            document.getElementById(`count-gift-${data.username}`).textContent = formatNumber(data.giftCount);
-            
-            const box = document.getElementById(`tab-gift-${data.username}`); if (!box) return;
-            if (box.innerHTML.includes('Menunggu Gift')) box.innerHTML = '';
-
-            const div = document.createElement('div'); div.className = 'gift-line';
-            div.innerHTML = `<i class="fas fa-gift me-1 text-warning"></i> <span class="fw-bold text-white">@${data.log.user}</span> mengirim ${data.log.detail}`;
-            box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
-        });
-
-        socket.on('systemMsg', (data) => {
-            if (data.type === 'error') { Toast.fire({ icon: 'error', title: data.msg }); } 
-            else if (data.type === 'success') { Toast.fire({ icon: 'success', title: data.msg }); }
-        });
-
+        // === UI CARD BUILDER ===
         function createStreamCard(username, status, info, logsFromServer = [], chatCountFromServer = 0, giftCountFromServer = 0) {
             if (streams[username]) return; 
             const label1 = info ? (info.label1 || 'Tanpa Label 1') : 'Tanpa Label 1';
@@ -976,6 +768,7 @@
             grid.appendChild(col); 
             filterStreams(); 
 
+            // Render log awal
             if (logsFromServer.length > 0) {
                 const tabChat = document.getElementById(`tab-chat-${username}`);
                 const tabGift = document.getElementById(`tab-gift-${username}`);
@@ -999,16 +792,135 @@
             }
         }
 
+        // === SOCKET LISTENERS UNTUK MENANGKAP DATA DARI SERVER ===
+        socket.on('initStreams', (activeStreams) => {
+            activeStreams.forEach(data => createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount)); updateCategoryDropdown();
+        });
+        
+        socket.on('streamAdded', (data) => {
+            createStreamCard(data.username, data.status, data.info, data.logs, data.chatCount, data.giftCount); updateCategoryDropdown();
+        });
+
+        socket.on('streamRemoved', (data) => {
+            const col = document.getElementById(`col-${data.username}`);
+            if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
+            delete streams[data.username]; updateCategoryDropdown();
+        });
+
+        socket.on('allStreamsRemoved', () => {
+            for (let username in streams) {
+                const col = document.getElementById(`col-${username}`);
+                if (col) { col.style.opacity = "0"; setTimeout(() => col.remove(), 300); }
+                delete streams[username];
+            }
+            updateCategoryDropdown();
+            Toast.fire({ icon: 'success', title: `Seluruh akun berhasil dihapus!` });
+        });
+        
+        socket.on('activityCleared', (username) => {
+            if (streams[username]) {
+                streams[username].logs = []; streams[username].chatCount = 0; streams[username].giftCount = 0;
+                const chatCountEl = document.getElementById(`count-chat-${username}`); const giftCountEl = document.getElementById(`count-gift-${username}`);
+                if(chatCountEl) chatCountEl.textContent = "0"; if(giftCountEl) giftCountEl.textContent = "0";
+                const tabChat = document.getElementById(`tab-chat-${username}`); const tabGift = document.getElementById(`tab-gift-${username}`);
+                if(tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
+                if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
+                Toast.fire({ icon: 'success', title: `Aktivitas @${username} dibersihkan!` });
+            }
+        });
+
+        socket.on('allActivitiesCleared', () => {
+            for (let username in streams) {
+                streams[username].logs = []; streams[username].chatCount = 0; streams[username].giftCount = 0;
+                const chatCountEl = document.getElementById(`count-chat-${username}`); const giftCountEl = document.getElementById(`count-gift-${username}`);
+                if(chatCountEl) chatCountEl.textContent = "0"; if(giftCountEl) giftCountEl.textContent = "0";
+                const tabChat = document.getElementById(`tab-chat-${username}`); const tabGift = document.getElementById(`tab-gift-${username}`);
+                if(tabChat) tabChat.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-inbox fs-1 mb-2 opacity-50"></i><br>-- Menunggu Chat --</div>';
+                if(tabGift) tabGift.innerHTML = '<div class="text-center text-muted-custom small mt-5"><i class="fas fa-gift fs-1 mb-2 opacity-50"></i><br>-- Menunggu Gift --</div>';
+            }
+            Toast.fire({ icon: 'success', title: `Seluruh log aktivitas dibersihkan!` });
+        });
+
+        socket.on('streamStatusChanged', (data) => {
+            if (!streams[data.username]) return;
+            streams[data.username].status = data.status;
+            if (data.info && data.info.startTime) streams[data.username].startTime = data.info.startTime; 
+            const badge = document.getElementById(`status-${data.username}`); const card = document.getElementById(`card-${data.username}`);
+            if (!badge || !card) return;
+            badge.className = 'badge rounded-pill fw-normal shadow-sm d-inline-flex align-items-center gap-1';
+            if (data.status === 'live') {
+                badge.classList.add('bg-success'); badge.innerHTML = '<i class="fas fa-circle" style="font-size:7px"></i> ONLINE'; card.classList.remove('card-offline');
+            } else if (data.status === 'offline') {
+                badge.classList.add('bg-danger'); badge.innerHTML = '<i class="fas fa-power-off" style="font-size:9px"></i> OFFLINE'; card.classList.add('card-offline'); document.getElementById(`viewers-last-${data.username}`).textContent = "0"; 
+            } else if (data.status === 'checking') {
+                badge.classList.add('bg-warning', 'text-dark'); badge.innerHTML = '<i class="fas fa-sync fa-spin" style="font-size:9px"></i> CEK...';
+            }
+            filterStreams();
+        });
+        
+        socket.on('streamUpdate', (data) => {
+            if (!streams[data.username]) return;
+            if (data.viewers !== undefined) {
+                streams[data.username].lastViewers = data.viewers; streams[data.username].maxViewers = Math.max(streams[data.username].maxViewers, data.viewers);
+                const elLast = document.getElementById(`viewers-last-${data.username}`); const elPeak = document.getElementById(`viewers-peak-${data.username}`);
+                if (elLast) elLast.textContent = formatNumber(data.viewers); if (elPeak) elPeak.textContent = formatNumber(streams[data.username].maxViewers);
+            }
+            if (data.likes !== undefined) {
+                streams[data.username].likes = data.likes; const el = document.getElementById(`likes-${data.username}`); if (el) el.textContent = formatNumber(data.likes);
+            }
+        });
+
+        socket.on('streamChat', (data) => {
+            if (!streams[data.username]) return;
+            streams[data.username].chatCount = data.chatCount; streams[data.username].logs.push(data.log);
+            document.getElementById(`count-chat-${data.username}`).textContent = formatNumber(data.chatCount);
+            const box = document.getElementById(`tab-chat-${data.username}`); if (!box) return;
+            if (box.innerHTML.includes('Menunggu Chat')) box.innerHTML = ''; 
+            const div = document.createElement('div'); div.className = 'chat-line';
+            div.innerHTML = `<span class="fw-bold" style="color: #0ea5e9;">@${data.log.user}</span>: <span class="text-light">${data.log.detail}</span>`;
+            box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
+        });
+        
+        socket.on('streamGift', (data) => {
+            if (!streams[data.username]) return;
+            streams[data.username].giftCount = data.giftCount; streams[data.username].logs.push(data.log);
+            document.getElementById(`count-gift-${data.username}`).textContent = formatNumber(data.giftCount);
+            const box = document.getElementById(`tab-gift-${data.username}`); if (!box) return;
+            if (box.innerHTML.includes('Menunggu Gift')) box.innerHTML = '';
+            const div = document.createElement('div'); div.className = 'gift-line';
+            div.innerHTML = `<i class="fas fa-gift me-1 text-warning"></i> <span class="fw-bold text-white">@${data.log.user}</span> mengirim ${data.log.detail}`;
+            box.appendChild(div); if (box.childNodes.length > 200) box.removeChild(box.firstChild); box.scrollTop = box.scrollHeight;
+        });
+
+        socket.on('systemMsg', (data) => {
+            if (data.type === 'error') { Toast.fire({ icon: 'error', title: data.msg }); } 
+            else if (data.type === 'success') { Toast.fire({ icon: 'success', title: data.msg }); }
+        });
+
+        socket.on('importProgress', (data) => {
+            const widget = document.getElementById('importProgressWidget'); const bar = document.getElementById('importProgressBar');
+            widget.classList.add('show'); const percentage = (data.current / data.total) * 100; bar.style.width = `${percentage}%`;
+            document.getElementById('importCountText').innerText = `${data.current} / ${data.total}`; document.getElementById('importCurrentUsername').innerHTML = `Membuka: <span class="text-white fw-bold">@${data.username}</span>`;
+        });
+
+        socket.on('importComplete', () => {
+            const widget = document.getElementById('importProgressWidget');
+            setTimeout(() => { widget.classList.remove('show'); setTimeout(() => { document.getElementById('importProgressBar').style.width = '0%'; }, 500); }, 3000);
+        });
+
+        socket.on('serverStats', (data) => {
+            const memEl = document.getElementById('server-memory-usage');
+            if (memEl && data.memory) { memEl.innerHTML = `<i class="fas fa-memory me-1"></i> ${data.memory} MB`; }
+        });
+
+        // === UTILS TIMER & UPDATE STATISTIK GLOBAL ===
         setInterval(() => {
             const now = Date.now();
             let globalAccounts = 0, globalViewersPeak = 0, globalLikes = 0, globalInteractions = 0;
 
             for (let user in streams) {
                 const stream = streams[user];
-                globalAccounts++; 
-                globalViewersPeak += stream.maxViewers; 
-                globalLikes += stream.likes; 
-                globalInteractions += (stream.chatCount + stream.giftCount);
+                globalAccounts++; globalViewersPeak += stream.maxViewers; globalLikes += stream.likes; globalInteractions += (stream.chatCount + stream.giftCount);
 
                 if (stream.status === 'live' && stream.startTime) {
                     const diff = Math.floor((now - stream.startTime) / 1000);
@@ -1019,18 +931,12 @@
                     if (durationEl) durationEl.textContent = `${h}:${m}:${s}`;
                 }
             }
-
             document.getElementById('global-accounts').textContent = formatNumber(globalAccounts);
             document.getElementById('global-viewers-peak').textContent = formatNumber(globalViewersPeak);
             document.getElementById('global-likes').textContent = formatNumber(globalLikes);
             document.getElementById('global-interactions').textContent = formatNumber(globalInteractions);
         }, 1000);
 
-        function formatNumber(num) {
-            if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-            if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
-            return num;
-        }
     </script>
 </body>
 </html>
