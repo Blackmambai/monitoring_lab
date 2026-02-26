@@ -254,11 +254,26 @@ function connectStream(username) {
         if (!monitoredAccounts[username]) return; 
         monitoredAccounts[username].lastPing = Date.now();
 
-        let isLive = true;
-        if (state && state.roomInfo && state.roomInfo.status === 4) isLive = false;
-
-        if (!isLive) { handleOffline(username); return; }
+        // PENGECEKAN STATUS LIVE YANG SANGAT KETAT & AKURAT
+        let isLive = false;
         
+        if (state && state.roomInfo) {
+            // Kode 2 adalah penanda resmi dari TikTok bahwa akun sedang Live saat ini
+            if (state.roomInfo.status === 2) {
+                isLive = true;
+            }
+        } else {
+            // Jika API TikTok gagal mengirim roomInfo namun websocket sukses (Jarang terjadi)
+            isLive = true;
+        }
+
+        if (!isLive) { 
+            console.log(`[SCREENING KETAT] @${username} ditolak karena tidak Live (Status Code: ${state.roomInfo ? state.roomInfo.status : 'Unknown'}).`);
+            handleOffline(username); 
+            return; 
+        }
+        
+        console.log(`[ONLINE] @${username} Lolos pengecekan dan sedang Live!`);
         monitoredAccounts[username].status = 'live';
         monitoredAccounts[username].info = {
             startTime: Date.now(),
@@ -278,7 +293,8 @@ async function checkOfflineAccounts() {
     for (const user of offlineUsers) {
         if (monitoredAccounts[user]) {
             monitoredAccounts[user].status = 'checking';
-            io.emit('streamStatusChanged', { username: user, status: 'checking' });
+            // Pastikan info lama dikirim kembali agar UI tidak kehilangan data kategori
+            io.emit('streamStatusChanged', { username: user, status: 'checking', info: monitoredAccounts[user].info });
             connectStream(user);
             await new Promise(resolve => setTimeout(resolve, 2000));
         }
